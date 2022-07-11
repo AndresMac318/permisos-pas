@@ -1,0 +1,23 @@
+.boton {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 240px;
+    color: #ffffff;
+    background-color: #04ACB4;
+    font-size: 24px;
+    height: 50px;
+}
+
+.row {
+    --bs-gutter-x: auto !important;
+}
+
+img{
+   display: block;
+   margin-top: 14%;
+   margin-left: auto;
+   margin-right: auto;
+   height: 60vh;
+   width: 40vw;
+}

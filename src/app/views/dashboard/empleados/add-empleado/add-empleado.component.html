@@ -1,0 +1,73 @@
+<div class="row justify-content-center">
+    <div class="col-8 mt-4">
+        <h2>Crear empleado</h2>
+        <hr>
+        <form action="" [formGroup]="formAddEmpleado" (ngSubmit)="guardarEmpleado()" >
+            <div class="row row-cols-2">
+                <div class="form-floating mb-4">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" autocomplete="off" formControlName="nombre" >
+                    <label for="floatingInput">Nombre</label>
+                </div>
+                <div class="form-floating mb-4">
+                    <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com" autocomplete="off" formControlName="cedula" >
+                    <label for="floatingInput">No. de identificación</label>
+                </div>
+                <div class="form-floating mb-4">
+                    <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com" autocomplete="off" formControlName="telefono" >
+                    <label for="floatingInput">Telefono</label>
+                </div>
+                <div class="form-floating">
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="rol" >
+                      <option *ngFor="let rol of roles" [value]="rol">{{rol}}</option>
+                    </select>
+                    <label for="floatingSelect">Seleccione el rol</label>
+                  </div>
+                  <div class="mb-4">
+                      <div>
+                        <h6 class="text-center">Firme aquí</h6>
+                        <canvas 
+                            ejs-signature 
+                            #signatureComponent id="signature" 
+                            [maxStrokeWidth]="1" 
+                            [minStrokeWidth]="0.4" 
+                            [velocity]="0.9"                             
+                            (change)="signaturePadChangeState()"
+                            formControlName="firma"
+                        >
+                        </canvas>
+                        <div class="">
+                            <span style="float: left" >
+                                <button type="button" ejs-button #clearbuttoncomponent [disabled]="true" (click)="clearSignature()" >
+                                    Borrar
+                                </button>
+                            </span>
+                            <span style="float: left;" >
+                                <button type="button" ejs-button #savebuttoncomponent [disabled]="true" cssClass="e-info" class="ms-2" (click)="saveSignature()" >
+                                    Guardar
+                                </button>
+                            </span>
+                        </div>
+                          
+                      </div>
+
+                    
+                  </div>
+                  <div class="form-floating mb-4">
+                      <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                      <label for="floatingTextarea2">Ingrese su huella</label>
+                  </div>
+
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <button type="submit" class="btn btn-success">Guardar empleado</button>
+
+                </div>
+                
+            </div>
+            
+            
+        </form>
+    </div>
+</div>
