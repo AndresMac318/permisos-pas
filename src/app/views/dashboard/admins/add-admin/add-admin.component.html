@@ -1,8 +1,8 @@
 <div class="row justify-content-center">
     <div class="col-8 mt-4">
-        <h2>Crear empleado</h2>
+        <h2>Crear administrador</h2>
         <hr>
-        <form action="" [formGroup]="formAddEmpleado" (ngSubmit)="guardarEmpleado()" >
+        <form action="" [formGroup]="formAddAdmin" (ngSubmit)="guardarAdmin()" >
             <div class="row row-cols-2">
                 <div class="form-floating mb-4">
                     <input type="text" class="form-control" id="floatingInput" autocomplete="off" formControlName="apellido1" >
@@ -37,20 +37,16 @@
                     <label for="floatingInput">Direccion</label>
                 </div>
                 <div class="form-floating mb-4">
-                    <select class="form-select" id="floatingSelect" autocomplete="off" formControlName="sexo" >
+                    <select class="form-select" id="floatingInput" autocomplete="off" formControlName="sexo" >
                         <option *ngFor="let genero of generos" [value]="genero">{{genero}}</option>
                     </select>
-                    <label for="floatingSelect">Seleccione su genero</label>
+                    <label for="floatingInput">Seleccione su genero</label>
                 </div>
                 <div class="form-floating mb-4">
                     <input type="date" class="form-control" id="floatingInput" autocomplete="off" formControlName="fnacimiento" >
                     <label for="floatingInput">Fecha de nacimiento:</label>
                 </div>
                 
-                <!-- <div class="form-floating mb-4">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-                    <label for="floatingTextarea2">Ingrese su huella</label>
-                </div> -->
                 
 
             </div>
@@ -59,7 +55,7 @@
                 <div class="col col-8">
                     <h6 class="text-center">Escriba su firma</h6>
                 <canvas
-                    class="canvasEmpleado"
+                    class="canvasAdmin"
                     ejs-signature 
                     #signatureEmpleado id="signature" 
                     [maxStrokeWidth]="1" 
@@ -85,9 +81,9 @@
                 
             </div>
 
-            <div class="row justify-content-center mb-4">
+            <div class="row justify-content-center">
                 <div class="col-4">
-                    <button type="submit" class="btn btn-success">Guardar empleado</button>
+                    <button type="submit" class="btn btn-success">Guardar administrador</button>
                 </div>
                 
             </div>

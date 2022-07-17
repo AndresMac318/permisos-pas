@@ -1,23 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Empleado } from 'src/app/models/empleado';
-
 import { SignatureComponent } from '@syncfusion/ej2-angular-inputs';
+import { Empleado } from 'src/app/models/empleado';
 import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
 import { EmpleadoService } from 'src/app/services/empleado/empleado.service';
 
 @Component({
-  selector: 'app-add-empleado',
-  templateUrl: './add-empleado.component.html',
-  styleUrls: ['./add-empleado.component.css']
+  selector: 'app-add-admin',
+  templateUrl: './add-admin.component.html',
+  styleUrls: ['./add-admin.component.css']
 })
-export class AddEmpleadoComponent implements OnInit {
+export class AddAdminComponent implements OnInit {
 
-  formAddEmpleado!: FormGroup;
-
+  formAddAdmin!: FormGroup;
   generos: string[] = ['masculino', 'femenino', 'otro'];
-
-  roles : string[] = ['talento humano', 'jefe inmediato', 'empleado']; 
 
   @ViewChild('signatureEmpleado')
   public signatureObject!: SignatureComponent; 
@@ -50,21 +46,19 @@ export class AddEmpleadoComponent implements OnInit {
     }
   }
 
-  
-
   crearFormulario(){
-    this.formAddEmpleado = this.fb.group({
-      apellido1: ['', [Validators.required]],
-      apellido2: ['', [Validators.required]],
-      nombre1: ['', [Validators.required]],
-      nombre2: ['', [Validators.required]],
-      cedula: ['', [Validators.required]],
+    this.formAddAdmin = this.fb.group({
+      apellido1: ['', [Validators.required, Validators.minLength(2)]],
+      apellido2: ['', [Validators.required, Validators.minLength(2)]],
+      nombre1: ['', [Validators.required, Validators.minLength(2)]],
+      nombre2: ['', [Validators.required, Validators.minLength(2)]],
+      cedula: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      telefono: ['', [Validators.required]],
-      direccion: ['', [Validators.required]],
+      telefono: ['', [Validators.required, Validators.minLength(7)]],
+      direccion: ['', [Validators.required, Validators.minLength(6)]],
       sexo: ['', Validators.required],
-      fnacimiento: ['', [Validators.required]],
-      firma: ['', [Validators.required]]
+      fnacimiento: ['', [Validators.required, Validators.minLength(10)]],
+      firma: ['', [Validators.required]],
     })
   }
 
@@ -74,17 +68,15 @@ export class AddEmpleadoComponent implements OnInit {
     if (base64 == null || base64==="") {
       alert('Ingrese su firma');
     }
-    this.formAddEmpleado.get('firma')?.setValue(base64);
+    this.formAddAdmin.get('firma')?.setValue(base64);
     /* console.log(base64); */
   }
 
-  guardarEmpleado(){
+  guardarAdmin(){
     
-    if (this.formAddEmpleado.invalid) {
+    if (this.formAddAdmin.invalid) {
       alert('Diligencie todos los campos!!')
-      console.log(this.formAddEmpleado.value);
-      
-      return Object.values(this.formAddEmpleado.controls).forEach(control => {
+      return Object.values(this.formAddAdmin.controls).forEach(control => {
         if (control instanceof FormGroup) {
           Object.values(control.controls).forEach(control => control.markAsTouched());
         } else {
@@ -93,23 +85,22 @@ export class AddEmpleadoComponent implements OnInit {
       });
     }
     //console.log(this.formAddEmpleado.value);
-
     const body : Empleado = {
-      cedula: this.formAddEmpleado.controls['cedula'].value,
-      apellido1: this.formAddEmpleado.controls['apellido1'].value,
-      apellido2: this.formAddEmpleado.controls['apellido2'].value,
-      nombre1: this.formAddEmpleado.controls['nombre1'].value,
-      nombre2: this.formAddEmpleado.controls['nombre2'].value,
-      email: this.formAddEmpleado.controls['email'].value,
-      password: undefined,
-      telefono: this.formAddEmpleado.controls['telefono'].value,
-      direccion: this.formAddEmpleado.controls['direccion'].value,
-      sexo: this.formAddEmpleado.controls['sexo'].value,
-      fnacimiento: this.formAddEmpleado.controls['fnacimiento'].value,
-      firma: this.formAddEmpleado.controls['firma'].value,
-      rol: 'empleado',
+      cedula: this.formAddAdmin.controls['cedula'].value,
+      apellido1: this.formAddAdmin.controls['apellido1'].value,
+      apellido2: this.formAddAdmin.controls['apellido2'].value,
+      nombre1: this.formAddAdmin.controls['nombre1'].value,
+      nombre2: this.formAddAdmin.controls['nombre2'].value,
+      email: this.formAddAdmin.controls['email'].value,
+      password: this.formAddAdmin.controls['cedula'].value,
+      telefono: this.formAddAdmin.controls['telefono'].value,
+      direccion: this.formAddAdmin.controls['direccion'].value,
+      sexo: this.formAddAdmin.controls['sexo'].value,
+      fnacimiento: this.formAddAdmin.controls['fnacimiento'].value,
+      firma: this.formAddAdmin.controls['firma'].value,
+      rol: 'admin',
     };
-    //this._es.createEmpleado(body).subscribe(res => alert('empleado creado!'))
+    //this._es.createAdmin(body).subscribe(res => alert('admin creado!'))
     console.log(body);
     
   }

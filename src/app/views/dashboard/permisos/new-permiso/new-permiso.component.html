@@ -1,0 +1,109 @@
+<div class="row justify-content-center">
+    <div class="col-8 mt-4">
+        <h2>Nuevo permiso</h2>
+        <hr>
+        <form action="" [formGroup]="formNewPermiso" (ngSubmit)="guardarPermiso()" >
+            <div class="row row-cols-2">
+                <h6>Autoriza</h6>
+                <h6>Solicita</h6>
+            </div>
+            <div class="row row-cols-2">
+                <div class="form-floating mb-4">
+                    <input type="number" class="form-control" id="floatingInput" autocomplete="off" formControlName="cedAutoriza" >
+                    <label for="floatingInput">Cédula</label>
+                </div>
+                <div class="form-floating mb-4">
+                    <input type="number" class="form-control" id="floatingInput" autocomplete="off" formControlName="cedSolicita" >
+                    <label for="floatingInput">Cédula</label>
+                </div>
+                <div class="form-floating mb-4">
+                    <input type="text" class="form-control" id="floatingInput" autocomplete="off" formControlName="fcreacion" >
+                    <label for="floatingInput">Fecha de creación</label>
+                </div>
+                <div class="form-floating">
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="codMotivo" >
+                      <option *ngFor="let motivo of motivos" [value]="motivo">{{motivo}}</option>
+                    </select>
+                    <label for="floatingSelect">Seleccione el motivo</label>
+                </div>
+                <div class="form-floating mb-4">
+                    <input type="date" class="form-control" id="floatingInput" autocomplete="off" formControlName="fsalida" >
+                    <label for="floatingInput">Fecha de salida</label>
+                </div>
+                <div class="form-floating mb-4">
+                    <input type="date" class="form-control" id="floatingInput" autocomplete="off" formControlName="fentrada" >
+                    <label for="floatingInput">Fecha de entrada</label>
+                </div>
+                
+                <div class="mb-4">
+                  <div>
+                    <h6 class="text-center">Firma autoriza</h6>
+                    <canvas 
+                        ejs-signature 
+                        #signatureAutoriza id="signature" 
+                        [maxStrokeWidth]="1" 
+                        [minStrokeWidth]="0.4" 
+                        [velocity]="0.9"                             
+                        (change)="signaturePadChangeState()"
+                        formControlName="firmaAutoriza"
+                    >
+                    </canvas>
+                    <div class="">
+                        <span style="float: left" >
+                            <button type="button" ejs-button #clearbuttoncomponent [disabled]="true" (click)="clearSignature()" >
+                                Borrar
+                            </button>
+                        </span>
+                        <span style="float: left;" >
+                            <button type="button" ejs-button #savebuttoncomponent [disabled]="true" cssClass="e-info" class="ms-2" (click)="saveSignature()" >
+                                Guardar
+                            </button>
+                        </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <div>
+                    <h6 class="text-center">Firma solicitante</h6>
+                    <canvas 
+                        ejs-signature 
+                        #signatureSolicita id="signature" 
+                        [maxStrokeWidth]="1" 
+                        [minStrokeWidth]="0.4" 
+                        [velocity]="0.9"                             
+                        (change)="signaturePadChangeState2()"
+                        formControlName="firmaAutoriza"
+                    >
+                    </canvas>
+                    <div class="">
+                        <span style="float: left" >
+                            <button type="button" ejs-button #clearbuttoncomponent2 [disabled]="true" (click)="clearSignature2()" >
+                                Borrar
+                            </button>
+                        </span>
+                        <span style="float: left;" >
+                            <button type="button" ejs-button #savebuttoncomponent2 [disabled]="true" cssClass="e-info" class="ms-2" (click)="saveSignature2()" >
+                                Guardar
+                            </button>
+                        </span>
+                    </div>
+                  </div>
+                </div>
+                  <!-- <div class="form-floating mb-4">
+                      <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                      <label for="floatingTextarea2">Ingrese su huella</label>
+                  </div> -->
+
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <button type="submit" class="btn btn-success">Guardar permiso</button>
+                </div>
+                
+            </div>
+            
+            
+        </form>
+    </div>
+</div>

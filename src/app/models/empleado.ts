@@ -1,11 +1,16 @@
-import * as internal from "stream";
-
 export interface Empleado {
-    cedula: internal;
-    nombre: string;
-    telefono: internal;
-    email: string;
-    direccion: string;
-    rol: string;
-    firma: string;
+    cedula:      number;
+    apellido1:   string;
+    apellido2?:  string;
+    nombre1:     string;
+    nombre2?:    string;
+    email:       string;
+    password?:   string;
+    telefono:    number;
+    direccion:   string;
+    sexo:        string;
+    fnacimiento: string;
+    firma?:      string;
+    rol?:         string;
+    /* idEmpleado?:  number; */
 }
