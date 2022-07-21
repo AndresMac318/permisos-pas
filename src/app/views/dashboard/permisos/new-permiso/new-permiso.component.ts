@@ -160,7 +160,7 @@ export class NewPermisoComponent implements OnInit {
     }
 
     
-    console.log('imprime formulario', this.formNewPermiso.value);
+    //console.log('imprime formulario', this.formNewPermiso.value);
 
 
     let idadmin=0;

@@ -112,7 +112,7 @@ export class AddEmpleadoComponent implements OnInit {
       
       Swal.fire(
         'Good!',
-        'El permiso fue creado!',
+        'El empleado fue creado!',
         'success'
       )
     })
