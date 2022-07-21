@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { AdminGuard } from './guards/admin.guard';
+import { EmpleadosGuard } from './guards/empleados.guard';
+import { GeneralGuard } from './guards/general.guard';
 import { AddAdminComponent } from './views/dashboard/admins/add-admin/add-admin.component';
 import { AdminsComponent } from './views/dashboard/admins/admins.component';
+import { EditAdminComponent } from './views/dashboard/admins/edit-admin/edit-admin.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { AddEmpleadoComponent } from './views/dashboard/empleados/add-empleado/add-empleado.component';
 import { EditEmpleadoComponent } from './views/dashboard/empleados/edit-empleado/edit-empleado.component';
@@ -16,24 +20,26 @@ import { PermisosComponent } from './views/dashboard/permisos/permisos.component
 import { LoginComponent } from './views/login/login.component';
 
 const routes: Routes = [
-  { path: 'home', component: AppComponent },
+  /* { path: 'home', component: AppComponent }, */
   { path: 'login', component: LoginComponent },
   {
     path: 'dashboard', 
     component: DashboardComponent, 
     children: [
-      { path:'empleados', component: EmpleadosComponent },
-      { path:'empleado-add', component: AddEmpleadoComponent },
-      { path:'empleado-edit', component: EditEmpleadoComponent },
-      { path:'admins', component: AdminsComponent },
-      { path:'admin-add', component: AddAdminComponent },
-      { path:'permisos', component: PermisosComponent },
-      { path:'permisos-new', component: NewPermisoComponent },
-      { path:'permisos-edit', component: EditPermisoComponent },
-      { path:'motivos', component: MotivosComponent },
-      { path:'motivos-add', component: AddMotivoComponent },
-      { path:'motivos-edit/:id', component: EditMotivoComponent },
-    ]
+      { path:'empleados', component: EmpleadosComponent,canActivate: [AdminGuard] },
+      { path:'empleado-add', component: AddEmpleadoComponent,canActivate: [AdminGuard] },
+      { path:'empleado-edit/:id', component: EditEmpleadoComponent, canActivate: [AdminGuard]},
+      { path:'admins', component: AdminsComponent ,canActivate: [AdminGuard]},
+      { path:'admin-add', component: AddAdminComponent ,canActivate: [AdminGuard]},
+      { path:'admin-edit/:id', component: EditAdminComponent ,canActivate: [AdminGuard]},
+      { path:'permisos', component: PermisosComponent ,canActivate: [AdminGuard]},
+      { path:'permisos-new', component: NewPermisoComponent ,canActivate: [AdminGuard]},
+      { path:'permisos-edit', component: EditPermisoComponent ,canActivate: [AdminGuard]},
+      { path:'motivos', component: MotivosComponent ,canActivate: [AdminGuard]},
+      { path:'motivos-add', component: AddMotivoComponent ,canActivate: [AdminGuard]},
+      { path:'motivos-edit/:id', component: EditMotivoComponent ,canActivate: [AdminGuard]},
+    ],
+    canActivate: [GeneralGuard]
   },
   { path: '**', pathMatch:'full', redirectTo:'login' }
 ];

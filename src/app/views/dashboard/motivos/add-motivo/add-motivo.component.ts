@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Motivo } from 'src/app/models/motivo';
 import { MotivosService } from 'src/app/services/motivos/motivos.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-motivo',
@@ -45,8 +46,14 @@ export class AddMotivoComponent implements OnInit {
       detalleMotivo: this.formAddMotivo.controls['detalle'].value,
       descripcion: this.formAddMotivo.controls['descripcion'].value,
     };
-    this._ms.createMotivo(body).subscribe(res => alert('motivo creado!'))
-    console.log(body);
+    this._ms.createMotivo(body).subscribe(res => {
+      Swal.fire(
+        'Good!',
+        'El motivo fue creado!',
+        'success'
+      )
+    })
+    //console.log(body);
     
   }
 

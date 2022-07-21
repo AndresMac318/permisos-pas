@@ -11,6 +11,8 @@ export class EmpleadoService {
 
   constructor(private http: HttpClient) { }
 
+  /* empleado */
+
   getEmpleados(){
     return this.http.get<Empleado[]>('http://localhost:3000/user/empleados');
   }
@@ -18,6 +20,20 @@ export class EmpleadoService {
   createEmpleado(body: Empleado){
     return this.http.post<any>('http://localhost:3000/user/empleados', body);
   }
+
+  updateEmpleado(id: any, body:Empleado){
+    return this.http.put(`http://localhost:3000/user/empleados/${id}`, body);
+  }
+
+  getEmpleado(id:any){
+    return this.http.get<Empleado[]>(`http://localhost:3000/user/empleados/${id}`);
+  }
+
+  deleteEmpleado(id: any){
+    return this.http.delete(`http://localhost:3000/user/empleados/${id}`);
+  }
+
+  /* Admin */
   
   createAdmin(body: Empleado){
     return this.http.post<any>('http://localhost:3000/user/admins', body);
@@ -27,7 +43,15 @@ export class EmpleadoService {
     return this.http.get<Empleado[]>('http://localhost:3000/user/admins');
   }
 
-  getIds(body:any){
-    return this.http.post<ResIDS>('http://localhost:3000/user/permisosIds', body);
+  getAdmin(id:any){
+    return this.http.get<Empleado[]>(`http://localhost:3000/user/empleados/${id}`);
+  }
+
+  updateAdmin(id: any, body:Empleado){
+    return this.http.put(`http://localhost:3000/user/empleados/${id}`, body);
+  }
+
+  deleteAdmin(id: any){
+    return this.http.delete(`http://localhost:3000/user/admins/${id}`);
   }
 }

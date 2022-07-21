@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Motivo } from 'src/app/models/motivo';
 import { MotivosService } from 'src/app/services/motivos/motivos.service';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-motivo',
@@ -34,7 +35,7 @@ export class EditMotivoComponent implements OnInit {
   }
 
   crearFormulario(){
-    console.log('crear form');
+    //console.log('crear form');
     this.formEditMotivo = this.fb.group({
       codMotivo: ['', [Validators.required]],
       detalleMotivo: ['', [Validators.required]],
@@ -62,7 +63,11 @@ export class EditMotivoComponent implements OnInit {
       descripcion: this.formEditMotivo.controls['descripcion'].value
     }
     this._ms.updateMotivo(this.id, body).subscribe(res =>{
-      console.log(res);
+      Swal.fire(
+        'Good!',
+        'El motivo fue actualizado!',
+        'success'
+      )
       
     })
   }

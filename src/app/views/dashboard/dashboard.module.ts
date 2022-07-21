@@ -18,6 +18,8 @@ import { AddMotivoComponent } from './motivos/add-motivo/add-motivo.component';
 import { EditMotivoComponent } from './motivos/edit-motivo/edit-motivo.component';
 import { AdminsComponent } from './admins/admins.component';
 import { AddAdminComponent } from './admins/add-admin/add-admin.component';
+import { EditAdminComponent } from './admins/edit-admin/edit-admin.component';
+
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { AddAdminComponent } from './admins/add-admin/add-admin.component';
     EditMotivoComponent,
     AdminsComponent,
     AddAdminComponent,
+    EditAdminComponent,
     
   ],
   imports: [
@@ -39,7 +42,8 @@ import { AddAdminComponent } from './admins/add-admin/add-admin.component';
     HttpClientModule,
     ReactiveFormsModule,
     SignatureModule,
-    ButtonModule
+    ButtonModule,
+    
   ],
   exports: [
     EmpleadosComponent,

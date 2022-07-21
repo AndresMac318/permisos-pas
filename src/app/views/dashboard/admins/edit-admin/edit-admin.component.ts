@@ -6,17 +6,16 @@ import { EmpleadoService } from 'src/app/services/empleado/empleado.service';
 import { SignatureComponent } from '@syncfusion/ej2-angular-inputs';
 import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
 import * as moment from 'moment';
-import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-edit-empleado',
-  templateUrl: './edit-empleado.component.html',
-  styleUrls: ['./edit-empleado.component.css']
+  selector: 'app-edit-admin',
+  templateUrl: './edit-admin.component.html',
+  styleUrls: ['./edit-admin.component.css']
 })
-export class EditEmpleadoComponent implements OnInit {
+export class EditAdminComponent implements OnInit {
 
-  formEditEmpleado!: FormGroup;
-  empleado!: Empleado;
+  formEditAdmin!: FormGroup;
+  admin!: Empleado;
   id!:number;
   generos: string[] = ['masculino', 'femenino', 'otro'];
 
@@ -40,14 +39,14 @@ export class EditEmpleadoComponent implements OnInit {
       
     });
 
-    this._es.getEmpleado(this.id).subscribe(res=>{
+    this._es.getAdmin(this.id).subscribe(res=>{
       
       let {fnacimiento} = res[0];
-      console.log('server', fnacimiento);
+      //console.log('server', fnacimiento);
       var mifecha = moment.utc(fnacimiento).format('YYYY-MM-DD');
       //console.log('mia',mifecha);
-      this.empleado = res[0];
-      this.empleado.fnacimiento = mifecha; 
+      this.admin = res[0];
+      this.admin.fnacimiento = mifecha; 
       this.cargarFormulario();
     })
   }
@@ -69,7 +68,7 @@ export class EditEmpleadoComponent implements OnInit {
 
   crearFormulario(){
     //console.log('crear form');
-    this.formEditEmpleado = this.fb.group({
+    this.formEditAdmin = this.fb.group({
       apellido1: ['', [Validators.required]],
       apellido2: ['', [Validators.required]],
       nombre1: ['', [Validators.required]],
@@ -80,23 +79,23 @@ export class EditEmpleadoComponent implements OnInit {
       direccion: ['', [Validators.required]],
       sexo: ['', Validators.required],
       fnacimiento: ['', [Validators.required]],
-      firma: ['', [Validators.required]]
+      firma: ['', [Validators.required]],
     })
   }
 
   cargarFormulario(){
     //console.log('cargar form');   
-    this.formEditEmpleado.controls['apellido1'].setValue(this.empleado.apellido1);
-    this.formEditEmpleado.controls['apellido2'].setValue(this.empleado.apellido2);
-    this.formEditEmpleado.controls['nombre1'].setValue(this.empleado.nombre1);
-    this.formEditEmpleado.controls['nombre2'].setValue(this.empleado.nombre2);
-    this.formEditEmpleado.controls['cedula'].setValue(this.empleado.cedula);
-    this.formEditEmpleado.controls['email'].setValue(this.empleado.email);
-    this.formEditEmpleado.controls['telefono'].setValue(this.empleado.telefono);
-    this.formEditEmpleado.controls['direccion'].setValue(this.empleado.direccion);
-    this.formEditEmpleado.controls['sexo'].setValue(this.empleado.sexo);
-    this.formEditEmpleado.controls['fnacimiento'].setValue(this.empleado.fnacimiento);
-    this.formEditEmpleado.controls['firma'].setValue(this.empleado.firma);
+    this.formEditAdmin.controls['apellido1'].setValue(this.admin.apellido1);
+    this.formEditAdmin.controls['apellido2'].setValue(this.admin.apellido2);
+    this.formEditAdmin.controls['nombre1'].setValue(this.admin.nombre1);
+    this.formEditAdmin.controls['nombre2'].setValue(this.admin.nombre2);
+    this.formEditAdmin.controls['cedula'].setValue(this.admin.cedula);
+    this.formEditAdmin.controls['email'].setValue(this.admin.email);
+    this.formEditAdmin.controls['telefono'].setValue(this.admin.telefono);
+    this.formEditAdmin.controls['direccion'].setValue(this.admin.direccion);
+    this.formEditAdmin.controls['sexo'].setValue(this.admin.sexo);
+    this.formEditAdmin.controls['fnacimiento'].setValue(this.admin.fnacimiento);
+    this.formEditAdmin.controls['firma'].setValue(this.admin.firma);
   }
 
   public saveSignature(){
@@ -105,35 +104,31 @@ export class EditEmpleadoComponent implements OnInit {
     if (base64 == null || base64==="") {
       alert('Ingrese su firma');
     }
-    this.formEditEmpleado.get('firma')?.setValue(base64);
+    this.formEditAdmin.get('firma')?.setValue(base64);
     /* console.log(base64); */
   }
 
-  guardarEmpleado(){
-    if(this.formEditEmpleado.invalid){
+  guardarAdmin(){
+    if(this.formEditAdmin.invalid){
       alert('Diligencie todos los campos!!');
     }
     let body: Empleado = {
-      cedula: this.formEditEmpleado.controls['cedula'].value,
-      apellido1: this.formEditEmpleado.controls['apellido1'].value,
-      apellido2: this.formEditEmpleado.controls['apellido2'].value,
-      nombre1: this.formEditEmpleado.controls['nombre1'].value,
-      nombre2:this.formEditEmpleado.controls['nombre2'].value,
-      email: this.formEditEmpleado.controls['email'].value,
-      password: this.formEditEmpleado.controls['cedula'].value,
-      telefono: this.formEditEmpleado.controls['telefono'].value,
-      direccion: this.formEditEmpleado.controls['direccion'].value,
-      sexo: this.formEditEmpleado.controls['sexo'].value,
-      fnacimiento: this.formEditEmpleado.controls['fnacimiento'].value,
-      firma: this.formEditEmpleado.controls['firma'].value,
-      rol: 'empleado',
+      cedula: this.formEditAdmin.controls['cedula'].value,
+      apellido1: this.formEditAdmin.controls['apellido1'].value,
+      apellido2: this.formEditAdmin.controls['apellido2'].value,
+      nombre1: this.formEditAdmin.controls['nombre1'].value,
+      nombre2: this.formEditAdmin.controls['nombre2'].value,
+      email: this.formEditAdmin.controls['email'].value,
+      password: this.formEditAdmin.controls['cedula'].value,
+      telefono: this.formEditAdmin.controls['telefono'].value,
+      direccion: this.formEditAdmin.controls['direccion'].value,
+      sexo: this.formEditAdmin.controls['sexo'].value,
+      fnacimiento: this.formEditAdmin.controls['fnacimiento'].value,
+      firma: this.formEditAdmin.controls['firma'].value,
+      rol: 'admin',
     }
-    this._es.updateEmpleado(this.id, body).subscribe(res=>{
-      Swal.fire(
-        'Good!',
-        'El empleado fue actualizado!',
-        'success'
-      )
+    this._es.updateAdmin(this.id, body).subscribe(res=>{
+      console.log(res);
     })
     //console.log(body);
     

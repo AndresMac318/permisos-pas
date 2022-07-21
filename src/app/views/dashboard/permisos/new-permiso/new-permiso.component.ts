@@ -1,8 +1,15 @@
-import { Component, createPlatform, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SignatureComponent } from '@syncfusion/ej2-angular-inputs';
-import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
 import { EmpleadoService } from 'src/app/services/empleado/empleado.service';
+import { Motivo } from 'src/app/models/motivo';
+import { MotivosService } from 'src/app/services/motivos/motivos.service';
+import { Permiso } from 'src/app/models/permiso';
+import { BehaviorSubject } from 'rxjs';
+import * as moment from 'moment';
+import { PermisosService } from 'src/app/services/permisos/permisos.service';
+import Swal from 'sweetalert2';
+import { ResUser } from 'src/app/models/resUser';
 
 @Component({
   selector: 'app-new-permiso',
@@ -11,117 +18,115 @@ import { EmpleadoService } from 'src/app/services/empleado/empleado.service';
 })
 export class NewPermisoComponent implements OnInit {
 
+  userActive!:ResUser;
+  userSolicita!: ResUser;
+  userPermiso!:ResUser;
   formNewPermiso!: FormGroup;
+  fechaNow = new Date();
+  bandera = false;
+  fecha = moment.utc(this.fechaNow.setMinutes(this.fechaNow.getMinutes() + this.fechaNow.getTimezoneOffset())).format('YYYY-MM-DD HH:MM')
+  firma54!:string;
 
-  cedAut= 0;
-  cedSol=0;
+  idAdmin = new BehaviorSubject<number>(0);
+  idEmpleado = new BehaviorSubject<number>(0);
 
-  motivos: string[] = ['cita odontologia', 'cita medica', 'emergencia familiar']
+  motivos: Motivo[]= [];
 
   @ViewChild('signatureAutoriza')
-  public signatureObject!: SignatureComponent; 
+  public signatureObject!: SignatureComponent;
   
   @ViewChild('signatureSolicita')
   public signatureObject2!: SignatureComponent; 
-  
-  @ViewChild('clearbuttoncomponent')
-  public clearButtonObject!: ButtonComponent;
-  
-  @ViewChild('savebuttoncomponent')
-  public saveButtonObject!: ButtonComponent;
-  
-  @ViewChild('clearbuttoncomponent2')
-  public clearButtonObject2!: ButtonComponent;
-  
-  @ViewChild('savebuttoncomponent2')
-  public saveButtonObject2!: ButtonComponent;
 
-  constructor(private fb: FormBuilder, private _es: EmpleadoService) {
+  constructor(private fb: FormBuilder, private _es: EmpleadoService, private _ms: MotivosService, private _ps: PermisosService) {
     this.crearFormulario();
+    this._ms.getMotivos().subscribe(res=>{
+      this.motivos = res;
+    })
+    let body = {
+      id: sessionStorage.getItem('id'),
+      rol: sessionStorage.getItem('rol')
+    }
+    this._ps.getSolicitante(body).subscribe(res=>{
+      this.userActive=res;
+      //console.log(this.userActive);
+    });
+    
   }
 
   ngOnInit(): void {
+    this.cargarFormulario();
   }
 
-  public signaturePadChangeState(){
-    if(!this.signatureObject.isEmpty()){
-      this.saveButtonObject.disabled=false;
-      this.clearButtonObject.disabled=false;
+  open(): void {
+    let sign = this.userActive.firma;
+    this.signatureObject.load(sign);
+    let sign2 = this.userSolicita.firma;
+    this.signatureObject2.load(sign2);
+    if(this.formNewPermiso.controls['cedSolicita'] == null || this.formNewPermiso.controls['cedSolicita'].invalid){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'La cedula del solicitante que intenta ingresar no se encuentra en el sistema',
+      })
+      return;
     }
-  }
-
-  public clearSignature(){
-    this.signatureObject.clear();
-    if (this.signatureObject.isEmpty()) {
-      this.saveButtonObject.disabled = true;
-      this.clearButtonObject.disabled = true;
+    let body = {
+      cedulaAdmin: this.formNewPermiso.controls['cedAutoriza'].value,/* pasar cedula o id del admin logueado */
+      cedulaEmpleado: this.formNewPermiso.controls['cedSolicita'].value
     }
-  }
+    
+    this._ps.getIds(body).subscribe(res=>{
+      this.idEmpleado.next(res.EmpleadoRows);  
+      this.idAdmin.next(res.idAdministrativo);
+      this.bandera = true;
   
-  public signaturePadChangeState2(){
-    if(!this.signatureObject2.isEmpty()){
-      this.saveButtonObject2.disabled=false;
-      this.clearButtonObject2.disabled=false;
-    }
-  }
+    })
 
-  public clearSignature2(){
-    this.signatureObject2.clear();
-    if (this.signatureObject.isEmpty()) {
-      this.saveButtonObject.disabled = true;
-      this.clearButtonObject.disabled = true;
-    }
+    let idemp;
+    this.idEmpleado.subscribe(res => {
+      if(res>0){
+        idemp = res;
+
+        let body2 = {
+          id: idemp,
+          rol: 'empleado',
+        }
+        
+        this._ps.getSolicitante(body2).subscribe(res => {
+         /* realizate */
+        });
+      }
+    })
+    
   }
 
   crearFormulario(){
     this.formNewPermiso = this.fb.group({
       cedAutoriza: ['', [Validators.required, Validators.minLength(7)]],
       cedSolicita: ['', [Validators.required, Validators.minLength(7)]],
-      fcreacion: ['', [Validators.required]],
       codMotivo: ['', [Validators.required]],
       fsalida: ['', [Validators.required]],
       fentrada: ['', [Validators.required]],
-      firmaAutoriza: ['', [Validators.required]],
-      firmaSolicita: ['', [Validators.required]]
+      observaciones: [''],
     })
   }
 
-  public saveSignature(){
-    /* this.signatureObject.save(); */
-    let base64: string = this.signatureObject.getSignature();
-    if (base64 == null || base64==="") {
-      alert('Ingrese su firma');
-    }
-    this.formNewPermiso.get('firmaAutoriza')?.setValue(base64);
-    /* console.log(base64); */
-  }
-  
-  public saveSignature2(){
-    /* this.signatureObject.save(); */
-    let base64: string = this.signatureObject2.getSignature();
-    if (base64 == null || base64==="") {
-      alert('Ingrese su firma');
-    }
-    this.formNewPermiso.get('firmaSolicita')?.setValue(base64);
-    /* console.log(base64); */
-  }
+  cargarFormulario(){
+    if(this.userActive){
+      console.log('cargar form');  
+      this.formNewPermiso.controls['cedula'].setValue(this.userActive.cedula);
 
-  consultarIds(){
-    let body = {
-      idAutoriza: this.formNewPermiso.controls['cedAutoriza'].value,
-      idSolicita: this.formNewPermiso.controls['cedSolicita'].value
     }
-    //console.log(body);
     
-    this._es.getIds(body).subscribe(res =>{
-      /* res.res1[0].idEmpleado; */
-    })
   }
 
   guardarPermiso(){
-    /* console.log(this.formNewPermiso.controls['firma']) */;
-    this.consultarIds();
-    
+    if (!this.bandera) {
+      alert('Firme el formulario para guardar el permiso');
+      return;
+    }
+        
     if (this.formNewPermiso.invalid) {
       alert('Diligencie todos los campos!!')
       return Object.values(this.formNewPermiso.controls).forEach(control => {
@@ -132,11 +137,45 @@ export class NewPermisoComponent implements OnInit {
         }
       });
     }
-    console.log(this.formNewPermiso.value);
-    alert('Permiso creado!!')
-    let body = {
 
+    
+    console.log('imprime formulario', this.formNewPermiso.value);
+
+
+    let idadmin=0;
+    let idempleado=0;
+    this.idAdmin.subscribe(res => {
+      if(res>0){
+        idadmin = res
+        console.log(res);
+      }
+      
+    })
+    this.idEmpleado.subscribe(res => {
+      if(res>0){
+        idempleado = res
+        console.log(res);
+      }
+    })
+
+    let body: Permiso = {
+      idAdministrativo: idadmin,
+      idEmpleado: idempleado,
+      fpermiso: moment.utc(this.fechaNow.setMinutes(this.fechaNow.getMinutes() + this.fechaNow.getTimezoneOffset())).format('YYYY-MM-DD'),
+      fsalida: this.formNewPermiso.controls['fsalida'].value,
+      fentrada: this.formNewPermiso.controls['fentrada'].value,
+      observaciones: this.formNewPermiso.controls['observaciones'].value,
+      codMotivo: this.formNewPermiso.controls['codMotivo'].value,
     }
+    console.log(body);
+    this._ps.createPermiso(body).subscribe(res=>{
+      //console.log(res);
+      Swal.fire(
+        'Good!',
+        'El permiso fue creado!',
+        'success'
+      )
+    })
     
   }
 }

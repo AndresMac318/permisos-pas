@@ -27,30 +27,7 @@ export class MotivosService {
   }
 
   deleteMotivo(id:any){
-    console.log(id);
-    
-    Swal.fire({
-      title: '¿Estas seguro de realizar esta acción?',
-      text: "Estas a punto de eliminar un motivo.",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, eliminalo'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.http.delete(`http://localhost:3000/user/motivos/${id}`).subscribe(res=>{
-        console.log(res);
-        this.getMotivos().subscribe();
-          Swal.fire(
-            'Motivo eliminado',
-            'Haz eliminado un motivo.',
-            'success'
-          )
-        });
-
-      }
-    })
+    return this.http.delete(`http://localhost:3000/user/motivos/${id}`);
   }
 
 }

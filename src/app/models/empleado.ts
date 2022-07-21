@@ -11,6 +11,6 @@ export interface Empleado {
     sexo:        string;
     fnacimiento: string;
     firma?:      string;
-    rol?:         string;
+    rol?:        string;
     /* idEmpleado?:  number; */
 }

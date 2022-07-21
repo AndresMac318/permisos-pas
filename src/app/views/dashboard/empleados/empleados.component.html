@@ -26,8 +26,14 @@
                 <td>{{empleado.nombre1}} {{empleado.apellido1}}</td>
                 <td>{{empleado.email}}</td>
                 <td>
-                    <div class="btn btn-primary"><i class="bi bi-pencil-square"></i></div>&nbsp;
-                    <div class="btn btn-danger"><i class="bi bi-trash3-fill"></i></div>
+                  <button 
+                  class="btn btn-primary" 
+                  (click)="toEditEmpleado(empleado.cedula)">
+                    <i class="bi bi-pencil-square"></i>
+                  </button>&nbsp;
+                  <button class="btn btn-danger" (click)="deleteEmpleado(empleado.cedula)">
+                    <i class="bi bi-trash3-fill"></i>
+                  </button>
                 </td>
               </tr>
               

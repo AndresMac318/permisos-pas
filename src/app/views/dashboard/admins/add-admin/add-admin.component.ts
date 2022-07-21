@@ -4,6 +4,7 @@ import { SignatureComponent } from '@syncfusion/ej2-angular-inputs';
 import { Empleado } from 'src/app/models/empleado';
 import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
 import { EmpleadoService } from 'src/app/services/empleado/empleado.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-admin',
@@ -63,13 +64,11 @@ export class AddAdminComponent implements OnInit {
   }
 
   public saveSignature(){
-    /* this.signatureObject.save(); */
     let base64: string = this.signatureObject.getSignature();
     if (base64 == null || base64==="") {
       alert('Ingrese su firma');
     }
     this.formAddAdmin.get('firma')?.setValue(base64);
-    /* console.log(base64); */
   }
 
   guardarAdmin(){
@@ -84,7 +83,6 @@ export class AddAdminComponent implements OnInit {
         }
       });
     }
-    //console.log(this.formAddEmpleado.value);
     const body : Empleado = {
       cedula: this.formAddAdmin.controls['cedula'].value,
       apellido1: this.formAddAdmin.controls['apellido1'].value,
@@ -100,7 +98,13 @@ export class AddAdminComponent implements OnInit {
       firma: this.formAddAdmin.controls['firma'].value,
       rol: 'admin',
     };
-    //this._es.createAdmin(body).subscribe(res => alert('admin creado!'))
+    this._es.createAdmin(body).subscribe(res => {
+      Swal.fire(
+        'Good!',
+        'El admin fue creado!',
+        'success'
+      )
+    })
     console.log(body);
     
   }
