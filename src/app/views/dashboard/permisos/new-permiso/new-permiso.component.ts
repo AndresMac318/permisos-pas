@@ -18,6 +18,8 @@ import { ResUser } from 'src/app/models/resUser';
 })
 export class NewPermisoComponent implements OnInit {
 
+  islogg = new BehaviorSubject<number>(0);
+
   userActive!:ResUser;
   userSolicita!: ResUser;
   userPermiso!:ResUser;
@@ -39,30 +41,47 @@ export class NewPermisoComponent implements OnInit {
   public signatureObject2!: SignatureComponent; 
 
   constructor(private fb: FormBuilder, private _es: EmpleadoService, private _ms: MotivosService, private _ps: PermisosService) {
-    this.crearFormulario();
+    /* this.islogg.subscribe(res=>{
+      let idsess=sessionStorage.getItem('id');
+      if(idsess){
+        this.userActive.cedula;
+      }
+    }) */
+    console.log('constrru');
+    
     this._ms.getMotivos().subscribe(res=>{
       this.motivos = res;
     })
+    
+    
+    
+  }
+
+  ngOnInit(): void {
+    console.log('oninit');
+    this.cargarUserLog();  
+    this.crearFormulario();
+  
+    
+  }
+
+  cargarUserLog(){
     let body = {
       id: sessionStorage.getItem('id'),
       rol: sessionStorage.getItem('rol')
     }
     this._ps.getSolicitante(body).subscribe(res=>{
       this.userActive=res;
-      //console.log(this.userActive);
+      console.log(this.userActive);
+      this.cargarFormulario(res);
     });
-    
-  }
-
-  ngOnInit(): void {
-    this.cargarFormulario();
   }
 
   open(): void {
     let sign = this.userActive.firma;
     this.signatureObject.load(sign);
-    let sign2 = this.userSolicita.firma;
-    this.signatureObject2.load(sign2);
+    //let sign2 = this.userSolicita.firma;
+    //this.signatureObject2.load(sign2);
     if(this.formNewPermiso.controls['cedSolicita'] == null || this.formNewPermiso.controls['cedSolicita'].invalid){
       Swal.fire({
         icon: 'error',
@@ -112,10 +131,12 @@ export class NewPermisoComponent implements OnInit {
     })
   }
 
-  cargarFormulario(){
-    if(this.userActive){
+  cargarFormulario(res:ResUser){
+    if(res){
+      console.log(res.cedula);
+      
       console.log('cargar form');  
-      this.formNewPermiso.controls['cedula'].setValue(this.userActive.cedula);
+      this.formNewPermiso.controls['cedAutoriza'].setValue(res.cedula);
 
     }
     

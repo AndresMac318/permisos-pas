@@ -4,6 +4,7 @@ import { Permiso } from 'src/app/models/permiso';
 import { ResLogin } from 'src/app/models/ResLogin';
 import { ResUser } from 'src/app/models/resUser';
 import { resPermiso } from 'src/app/models/resPermiso';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 @Injectable({
@@ -15,6 +16,10 @@ export class PermisosService {
 
   getIds(body:any){
     return this.http.post<{idAdministrativo: number, EmpleadoRows: number}>('http://localhost:3000/user/permisosIds', body);
+  }
+
+  getIDLOGGUED(){
+    return sessionStorage.getItem('id');
   }
 
   createPermiso(body:Permiso){
