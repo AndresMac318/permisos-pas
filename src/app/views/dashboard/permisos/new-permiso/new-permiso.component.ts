@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { SignatureComponent } from '@syncfusion/ej2-angular-inputs';
 import { EmpleadoService } from 'src/app/services/empleado/empleado.service';
 import { Motivo } from 'src/app/models/motivo';
@@ -23,7 +23,7 @@ export class NewPermisoComponent implements OnInit {
   userActive!:ResUser;
   userSolicita!: ResUser;
   userPermiso!:ResUser;
-  formNewPermiso!: FormGroup;
+  formNewPermiso!: UntypedFormGroup;
   fechaNow = new Date();
   bandera = false;
   fecha = moment.utc(this.fechaNow.setMinutes(this.fechaNow.getMinutes() + this.fechaNow.getTimezoneOffset())).format('YYYY-MM-DD HH:MM')
@@ -40,7 +40,7 @@ export class NewPermisoComponent implements OnInit {
   @ViewChild('signatureSolicita')
   public signatureObject2!: SignatureComponent; 
 
-  constructor(private fb: FormBuilder, private _es: EmpleadoService, private _ms: MotivosService, private _ps: PermisosService) {
+  constructor(private fb: UntypedFormBuilder, private _es: EmpleadoService, private _ms: MotivosService, private _ps: PermisosService) {
     /* this.islogg.subscribe(res=>{
       let idsess=sessionStorage.getItem('id');
       if(idsess){
@@ -151,7 +151,7 @@ export class NewPermisoComponent implements OnInit {
     if (this.formNewPermiso.invalid) {
       alert('Diligencie todos los campos!!')
       return Object.values(this.formNewPermiso.controls).forEach(control => {
-        if (control instanceof FormGroup) {
+        if (control instanceof UntypedFormGroup) {
           Object.values(control.controls).forEach(control => control.markAsTouched());
         } else {
           control.markAsTouched();

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Empleado } from 'src/app/models/empleado';
 
 import { SignatureComponent } from '@syncfusion/ej2-angular-inputs';
@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 })
 export class AddEmpleadoComponent implements OnInit {
 
-  formAddEmpleado!: FormGroup;
+  formAddEmpleado!: UntypedFormGroup;
 
   generos: string[] = ['masculino', 'femenino', 'otro'];
 
@@ -29,7 +29,7 @@ export class AddEmpleadoComponent implements OnInit {
   @ViewChild('savebuttoncomponent')
   public saveButtonObject!: ButtonComponent;
 
-  constructor(private fb: FormBuilder, private _es: EmpleadoService) {
+  constructor(private fb: UntypedFormBuilder, private _es: EmpleadoService) {
     this.crearFormulario();
   }
 
@@ -84,7 +84,7 @@ export class AddEmpleadoComponent implements OnInit {
       console.log(this.formAddEmpleado.value);
 
       return Object.values(this.formAddEmpleado.controls).forEach(control => {
-        if (control instanceof FormGroup) {
+        if (control instanceof UntypedFormGroup) {
           Object.values(control.controls).forEach(control => control.markAsTouched());
         } else {
           control.markAsTouched();

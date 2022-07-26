@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Motivo } from 'src/app/models/motivo';
 import { MotivosService } from 'src/app/services/motivos/motivos.service';
 import { ActivatedRoute } from '@angular/router';
@@ -12,11 +12,11 @@ import Swal from 'sweetalert2';
 })
 export class EditMotivoComponent implements OnInit {
 
-  formEditMotivo!: FormGroup;
+  formEditMotivo!: UntypedFormGroup;
   motivo!: Motivo;
   id!: number;
 
-  constructor(private router: ActivatedRoute, private fb: FormBuilder, private _ms: MotivosService) {
+  constructor(private router: ActivatedRoute, private fb: UntypedFormBuilder, private _ms: MotivosService) {
     this.crearFormulario();
     
   }

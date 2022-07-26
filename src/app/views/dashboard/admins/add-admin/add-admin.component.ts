@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { SignatureComponent } from '@syncfusion/ej2-angular-inputs';
 import { Empleado } from 'src/app/models/empleado';
 import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class AddAdminComponent implements OnInit {
 
-  formAddAdmin!: FormGroup;
+  formAddAdmin!: UntypedFormGroup;
   generos: string[] = ['masculino', 'femenino', 'otro'];
 
   @ViewChild('signatureEmpleado')
@@ -25,7 +25,7 @@ export class AddAdminComponent implements OnInit {
   @ViewChild('savebuttoncomponent')
   public saveButtonObject!: ButtonComponent;
 
-  constructor(private fb: FormBuilder, private _es: EmpleadoService) {
+  constructor(private fb: UntypedFormBuilder, private _es: EmpleadoService) {
     this.crearFormulario();
   }
 
@@ -76,7 +76,7 @@ export class AddAdminComponent implements OnInit {
     if (this.formAddAdmin.invalid) {
       alert('Diligencie todos los campos!!')
       return Object.values(this.formAddAdmin.controls).forEach(control => {
-        if (control instanceof FormGroup) {
+        if (control instanceof UntypedFormGroup) {
           Object.values(control.controls).forEach(control => control.markAsTouched());
         } else {
           control.markAsTouched();

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Empleado } from 'src/app/models/empleado';
 import { EmpleadoService } from 'src/app/services/empleado/empleado.service';
@@ -14,7 +14,7 @@ import * as moment from 'moment';
 })
 export class EditAdminComponent implements OnInit {
 
-  formEditAdmin!: FormGroup;
+  formEditAdmin!: UntypedFormGroup;
   admin!: Empleado;
   id!:number;
   generos: string[] = ['masculino', 'femenino', 'otro'];
@@ -28,7 +28,7 @@ export class EditAdminComponent implements OnInit {
   @ViewChild('savebuttoncomponent')
   public saveButtonObject!: ButtonComponent;
 
-  constructor(private router: ActivatedRoute, private fb: FormBuilder, private _es: EmpleadoService) {
+  constructor(private router: ActivatedRoute, private fb: UntypedFormBuilder, private _es: EmpleadoService) {
     this.crearFormulario();
   }
 

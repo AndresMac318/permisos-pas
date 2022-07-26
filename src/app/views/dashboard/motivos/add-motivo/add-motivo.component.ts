@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Motivo } from 'src/app/models/motivo';
 import { MotivosService } from 'src/app/services/motivos/motivos.service';
 import Swal from 'sweetalert2';
@@ -11,9 +11,9 @@ import Swal from 'sweetalert2';
 })
 export class AddMotivoComponent implements OnInit {
 
-  formAddMotivo!: FormGroup;
+  formAddMotivo!: UntypedFormGroup;
 
-  constructor(private fb: FormBuilder, private _ms: MotivosService) {
+  constructor(private fb: UntypedFormBuilder, private _ms: MotivosService) {
     this.crearFormulario();
   }
 
@@ -33,7 +33,7 @@ export class AddMotivoComponent implements OnInit {
     if (this.formAddMotivo.invalid) {
       alert('Diligencie todos los campos!!')
       return Object.values(this.formAddMotivo.controls).forEach(control => {
-        if (control instanceof FormGroup) {
+        if (control instanceof UntypedFormGroup) {
           Object.values(control.controls).forEach(control => control.markAsTouched());
         } else {
           control.markAsTouched();

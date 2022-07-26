@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResLogin } from 'src/app/models/ResLogin';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -13,9 +13,9 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent implements OnInit {
 
-  formLogin!: FormGroup;
+  formLogin!: UntypedFormGroup;
 
-  constructor(private _auths: AuthService, private fb: FormBuilder, private router: Router) {
+  constructor(private _auths: AuthService, private fb: UntypedFormBuilder, private router: Router) {
     this.crearFormulario();
   }
 
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       })
       
       return Object.values(this.formLogin.controls).forEach(control => {
-        if (control instanceof FormGroup) {
+        if (control instanceof UntypedFormGroup) {
           Object.values(control.controls).forEach(control => control.markAsTouched());
         } else {
           control.markAsTouched();
