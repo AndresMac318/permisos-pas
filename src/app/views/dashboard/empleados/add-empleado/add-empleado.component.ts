@@ -63,7 +63,7 @@ export class AddEmpleadoComponent implements OnInit {
       direccion: ['', [Validators.required]],
       sexo: ['', Validators.required],
       fnacimiento: ['', [Validators.required]],
-      firma: ['', [Validators.required]]
+      //?firma: ['', [Validators.required]]
     })
   }
 
@@ -81,7 +81,7 @@ export class AddEmpleadoComponent implements OnInit {
 
     if (this.formAddEmpleado.invalid) {
       alert('Diligencie todos los campos!!')
-      console.log(this.formAddEmpleado.value);
+      //console.log(this.formAddEmpleado.value);
 
       return Object.values(this.formAddEmpleado.controls).forEach(control => {
         if (control instanceof UntypedFormGroup) {
@@ -104,7 +104,7 @@ export class AddEmpleadoComponent implements OnInit {
       direccion: this.formAddEmpleado.controls['direccion'].value,
       sexo: this.formAddEmpleado.controls['sexo'].value,
       fnacimiento: this.formAddEmpleado.controls['fnacimiento'].value,
-      firma: this.formAddEmpleado.controls['firma'].value,
+      //?firma: this.formAddEmpleado.controls['firma'].value,
       rol: 'empleado',
     };
     this._es.createEmpleado(body).subscribe(res => {

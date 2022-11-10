@@ -45,7 +45,7 @@ export class MotivosComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this._ms.deleteMotivo(id).subscribe(res=>{
-          console.log(res);
+          //console.log(res);
           Swal.fire(
             'Motivo eliminado',
             'Haz eliminado un motivo.',

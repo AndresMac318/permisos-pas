@@ -14,23 +14,25 @@ export class EmpleadoService {
   /* empleado */
 
   getEmpleados(){
-    return this.http.get<Empleado[]>('http://localhost:3000/user/empleados');
+    return this.http.get<Empleado[]>('http://localhost:3000/empleados');
   }
 
   createEmpleado(body: Empleado){
-    return this.http.post<any>('http://localhost:3000/user/empleados', body);
+    return this.http.post<any>('http://localhost:3000/empleados', body);
   }
 
   updateEmpleado(id: any, body:Empleado){
-    return this.http.put(`http://localhost:3000/user/empleados/${id}`, body);
+    console.log(body);
+    
+    return this.http.put(`http://localhost:3000/empleados/${id}`, body);
   }
 
   getEmpleado(id:any){
-    return this.http.get<Empleado[]>(`http://localhost:3000/user/empleados/${id}`);
+    return this.http.get<Empleado[]>(`http://localhost:3000/empleados/${id}`);
   }
 
   deleteEmpleado(id: any){
-    return this.http.delete(`http://localhost:3000/user/empleados/${id}`);
+    return this.http.delete(`http://localhost:3000/empleados/${id}`);
   }
 
   /* Admin */

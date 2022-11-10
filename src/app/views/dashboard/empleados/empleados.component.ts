@@ -49,7 +49,7 @@ export class EmpleadosComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this._es.deleteEmpleado(id).subscribe(res=>{
-          console.log(res);
+          //?console.log(res);
           Swal.fire(
             'Empleado eliminado',
             'Haz eliminado un empleado.',

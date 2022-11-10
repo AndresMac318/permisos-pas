@@ -11,23 +11,23 @@ export class MotivosService {
   constructor(private http: HttpClient) { }
   
   getMotivos(){
-    return this.http.get<Motivo[]>('http://localhost:3000/user/motivos');
+    return this.http.get<Motivo[]>('http://localhost:3000/motivos');
   }
 
   createMotivo(body: Motivo){
-    return this.http.post<Motivo>('http://localhost:3000/user/motivos', body);
+    return this.http.post<Motivo>('http://localhost:3000/motivos', body);
   }
 
   getMotivo(id: any) {
-    return this.http.get<Motivo[]>(`http://localhost:3000/user/motivos/${id}`);
+    return this.http.get<Motivo[]>(`http://localhost:3000/motivos/${id}`);
   }
 
   updateMotivo(id: any, body: Motivo){
-    return this.http.put(`http://localhost:3000/user/motivos/${body.codMotivo}`, body);
+    return this.http.put(`http://localhost:3000/motivos/${body.codMotivo}`, body);
   }
 
   deleteMotivo(id:any){
-    return this.http.delete(`http://localhost:3000/user/motivos/${id}`);
+    return this.http.delete(`http://localhost:3000/motivos/${id}`);
   }
 
 }

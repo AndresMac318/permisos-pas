@@ -43,7 +43,7 @@ export class EditEmpleadoComponent implements OnInit {
     this._es.getEmpleado(this.id).subscribe(res=>{
       
       let {fnacimiento} = res[0];
-      console.log('server', fnacimiento);
+      //?console.log('server', fnacimiento);
       var mifecha = moment.utc(fnacimiento).format('YYYY-MM-DD');
       //console.log('mia',mifecha);
       this.empleado = res[0];

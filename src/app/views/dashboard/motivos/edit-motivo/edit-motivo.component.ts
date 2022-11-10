@@ -24,8 +24,7 @@ export class EditMotivoComponent implements OnInit {
   ngOnInit(): void {
     this.router.params.subscribe(params => {
       this.id = params['id'];
-      console.log(this.id);
-      
+      //?console.log(this.id);
     });
 
     this._ms.getMotivo(this.id).subscribe(res=>{
@@ -44,10 +43,8 @@ export class EditMotivoComponent implements OnInit {
   }
 
   cargarFormulario(){
-    console.log('cargar form');
-    console.log(this.motivo);
-    
-    
+    //?console.log('cargar form');
+    //?console.log(this.motivo);
     this.formEditMotivo.controls['codMotivo'].setValue(this.motivo.codMotivo);
     this.formEditMotivo.controls['detalleMotivo'].setValue(this.motivo.detalleMotivo);
     this.formEditMotivo.controls['descripcion'].setValue(this.motivo.descripcion);

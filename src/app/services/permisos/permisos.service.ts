@@ -15,7 +15,7 @@ export class PermisosService {
   constructor(private http: HttpClient) {}
 
   getIds(body:any){
-    return this.http.post<{idAdministrativo: number, EmpleadoRows: number}>('http://localhost:3000/user/permisosIds', body);
+    return this.http.post<{idAdministrativo: number, EmpleadoRows: number}>('http://localhost:3000/permisos/Ids', body);
   }
 
   getIDLOGGUED(){
@@ -23,11 +23,11 @@ export class PermisosService {
   }
 
   createPermiso(body:Permiso){
-    return this.http.post(`http://localhost:3000/user/permisos`, body);
+    return this.http.post(`http://localhost:3000/permisos`, body);
   }
 
   getPermisosAdmin(id:any){
-    return this.http.get<resPermiso[]>(`http://localhost:3000/user/permisos/${id}`);
+    return this.http.get<resPermiso[]>(`http://localhost:3000/permisos/${id}`);
   }
 
   getSolicitante(body:any){
