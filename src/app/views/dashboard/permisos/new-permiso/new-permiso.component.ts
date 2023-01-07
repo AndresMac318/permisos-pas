@@ -26,7 +26,7 @@ export class NewPermisoComponent implements OnInit {
   formNewPermiso!: UntypedFormGroup;
   fechaNow = new Date();
   bandera = false;
-  fecha = moment.utc(this.fechaNow.setMinutes(this.fechaNow.getMinutes() + this.fechaNow.getTimezoneOffset())).format('YYYY-MM-DD HH:MM')
+  fecha = moment.utc(this.fechaNow.setMinutes(this.fechaNow.getMinutes() + this.fechaNow.getTimezoneOffset())).format('YYYY-MM-DD HH:MM:SS')
   firma54!:string;
 
   idAdmin = new BehaviorSubject<number>(0);

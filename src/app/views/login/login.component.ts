@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,7 +16,11 @@ export class LoginComponent implements OnInit {
 
   formLogin!: UntypedFormGroup;
 
-  constructor(private _auths: AuthService, private fb: UntypedFormBuilder, private router: Router) {
+  constructor(
+    private _auths: AuthService, 
+    private fb: UntypedFormBuilder, 
+    private router: Router
+  ) {
     this.crearFormulario();
   }
 
@@ -37,7 +42,7 @@ export class LoginComponent implements OnInit {
         title: 'Oops...',
         text: 'Todos los campos son requerdidos, ingrese nuevamente!',
         /* footer: '<a href="">Why do I have this issue?</a>' */
-      })
+      });
       
       return Object.values(this.formLogin.controls).forEach(control => {
         if (control instanceof UntypedFormGroup) {
@@ -47,15 +52,66 @@ export class LoginComponent implements OnInit {
         }
       });
     }
-    //console.log(this.formAddEmpleado.value);
+    
     const body : {email: string, password: string} = {
       email: this.formLogin.controls['email'].value,
       password: this.formLogin.controls['password'].value,
     }
 
     this._auths.login(body).subscribe(res => {
+      console.log(res);
+      if(res.ok === false){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Credenciales incorrectas!, ingrese nuevamente',
+        });
+        return;
+      }
+
+      if(!res.user.idAdministrativo){
+        sessionStorage.setItem('id', res.user.idEmpleado+'');
+        sessionStorage.setItem('rol', res.user.rol);
+        sessionStorage.setItem('cel', res.user.cedula+'');
+        this._auths.logueado.next(true);
+      }else{
+        sessionStorage.setItem('id', res.user.idAdministrativo+'');
+        sessionStorage.setItem('rol',res.user.rol);
+        this._auths.logueado.next(true);
+      }
+      this.router.navigateByUrl('/dashboard/empleados');
+      
+      /* if(res.Error.error.msg === 'credenciales invalidas'){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Credenciales incorrectas!, ingrese nuevamente',
+        });
+      }else{
+        console.log(res);
+        
+      } */
+      
+    })
+    /* this._auths.login(body).subscribe(res => {
       //console.log('mi',res);
-      this.formLogin.reset();
+      //this.formLogin.reset();
+      //console.log(res.HttpErrorResponse.error.msg);
+
+      Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Credenciales incorrectas!, ingrese nuevamente',
+        });
+      
+      if(res.status === "404") {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Credenciales incorrectas!, ingrese nuevamente',
+        });
+      }
+      
       if(res){
         if(!res.idAdministrativo){
           sessionStorage.setItem('id', res.idEmpleado+'');
@@ -70,22 +126,9 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/dashboard/empleados');
       }else{
         
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Usuario o clave incorrectos!, ingrese nuevamente',
-          /* footer: '<a href="">Why do I have this issue?</a>' */
-        })
         
       }
       
-      //controlar error de email and password 
-      
-      
-
-    })
-  
-    
+    }) */
   }
-
 }

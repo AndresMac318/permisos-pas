@@ -1,0 +1,29 @@
+#container-table {
+    overflow: scroll;
+    height: 100px;
+    width: 100%;
+}
+.container-table {
+    display: block;
+    height: 80%;
+}
+
+.custom-scroll {
+    height: 80%;
+    overflow: auto;
+}
+/* 
+table {
+    position: absolute;
+    width: 60%;
+    height: 150px;
+    overflow:scroll;
+
+} */
+
+/* tbody{
+    height: 100px;
+    overflow: auto;
+} */
+
+

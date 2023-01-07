@@ -1,43 +1,54 @@
 <div class="row justify-content-center mt-4">
-    <div class="col-8">
-        <h2>Control de empleados</h2>
-        <hr>
-        <button class="btn btn-success" (click)="toAddEmpleado()">Agregar</button>
-        <!-- <a class="btn btn-success" routerLink="/dashboard/empleado-add"><i class="bi bi-person-plus-fill"></i>Agregar</a> -->
-        
-    </div>
+  <div class="col-8">
+    <h2>Control de empleados</h2>
+    <hr />
+    <button class="btn btn-success" (click)="toAddEmpleado()">Agregar</button>
+    <!-- <a class="btn btn-success" routerLink="/dashboard/empleado-add"><i class="bi bi-person-plus-fill"></i>Agregar</a> -->
+  </div>
 
-    <div class="col-8 mt-4">
-        <table class="table caption-top">
-            <caption class=" h3 text-center">Lista de empleados</caption>
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Identificación</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Email</th>
-                <th scope="col">Opciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let empleado of empleados; let i = index">
-                <th scope="row">{{i+1}}</th>
-                <td>{{empleado.cedula}}</td>
-                <td>{{empleado.nombre1}} {{empleado.apellido1}}</td>
-                <td>{{empleado.email}}</td>
-                <td>
-                  <button 
-                  class="btn btn-primary" 
-                  (click)="toEditEmpleado(empleado.cedula)">
-                    <i class="bi bi-pencil-square"></i>
-                  </button>&nbsp;
-                  <button class="btn btn-danger" (click)="deleteEmpleado(empleado.cedula)">
-                    <i class="bi bi-trash3-fill"></i>
-                  </button>
-                </td>
-              </tr>
-              
-            </tbody>
-          </table>
+  <div class="col-md-10 col-8 mt-4 container-table">
+    
+    <h3 class="text-center">Lista de empleados</h3>
+
+    <div class="custom-scroll">
+
+      <table class="table" >
+
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Identificación</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Email</th>
+            <th scope="col">Opciones</th>
+          </tr>
+        </thead>
+
+        
+        <tbody>
+          <tr *ngFor="let empleado of empleados; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ empleado.cedula }}</td>
+            <td>{{ empleado.nombre1 }} {{ empleado.apellido1 }}</td>
+            <td>{{ empleado.email }}</td>
+            <td>
+              <button
+                class="btn btn-primary"
+                (click)="toEditEmpleado(empleado.cedula)"
+              >
+                <i class="bi bi-pencil-square"></i></button
+              >&nbsp;
+              <button
+                class="btn btn-danger"
+                (click)="deleteEmpleado(empleado.cedula)"
+              >
+                <i class="bi bi-trash3-fill"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        
+      </table>
     </div>
+  </div>
 </div>

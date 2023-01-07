@@ -23,6 +23,7 @@ export class PermisosComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarPermisos(this.id);
+    
   }
 
   toNewPermiso(){
@@ -32,7 +33,12 @@ export class PermisosComponent implements OnInit {
   cargarPermisos(id:any){
     this._ps.getPermisosAdmin(id).subscribe(res=>{
       this.permisos=res;
+      console.log(this.permisos);
     })
+  }
+
+  toEdit(id: any){
+    this.router.navigateByUrl(`/dashboard/permisos-edit/${id}`);
   }
 
 

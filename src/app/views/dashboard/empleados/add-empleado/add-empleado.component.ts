@@ -6,6 +6,7 @@ import { SignatureComponent } from '@syncfusion/ej2-angular-inputs';
 import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
 import { EmpleadoService } from 'src/app/services/empleado/empleado.service';
 import Swal from 'sweetalert2';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-add-empleado',
@@ -16,7 +17,10 @@ export class AddEmpleadoComponent implements OnInit {
 
   formAddEmpleado!: UntypedFormGroup;
 
-  generos: string[] = ['masculino', 'femenino', 'otro'];
+  generos: string[] = 
+  [
+  'masculino', 'femenino', 'hombre transexual', 'mujer transexual', 'bigenero', 'intersexual', 'no binario', 'prefiero no decir'
+  ];
 
   //roles : string[] = ['talento humano', 'jefe inmediato', 'empleado']; 
 
@@ -29,7 +33,11 @@ export class AddEmpleadoComponent implements OnInit {
   @ViewChild('savebuttoncomponent')
   public saveButtonObject!: ButtonComponent;
 
-  constructor(private fb: UntypedFormBuilder, private _es: EmpleadoService) {
+  constructor(
+    private fb: UntypedFormBuilder,
+    private location: Location, 
+    private _es: EmpleadoService,
+    ) {
     this.crearFormulario();
   }
 
@@ -80,9 +88,11 @@ export class AddEmpleadoComponent implements OnInit {
   guardarEmpleado() {
 
     if (this.formAddEmpleado.invalid) {
-      alert('Diligencie todos los campos!!')
-      //console.log(this.formAddEmpleado.value);
-
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Diligencie todos los campos!!',
+      });
       return Object.values(this.formAddEmpleado.controls).forEach(control => {
         if (control instanceof UntypedFormGroup) {
           Object.values(control.controls).forEach(control => control.markAsTouched());
@@ -114,7 +124,8 @@ export class AddEmpleadoComponent implements OnInit {
         'Good!',
         'El empleado fue creado!',
         'success'
-      )
+      );
+        this.location.back();
     })
 
   }

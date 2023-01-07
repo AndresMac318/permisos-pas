@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { Permiso } from 'src/app/models/permiso';
 import { ResLogin } from 'src/app/models/ResLogin';
 import { BehaviorSubject } from 'rxjs';
@@ -14,7 +14,9 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(body:{email: string, password: string}){
-    return this.http.post<ResLogin>('http://localhost:3000/user/login', body);
+    //console.log(body);
+    
+    return this.http.post<any>('http://localhost:3000/auth/login', body);
   }
 
 

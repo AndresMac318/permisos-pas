@@ -7,18 +7,20 @@
         
     </div>
 
-    <div class="col-8 mt-4">
-        <table class="table caption-top">
-            <caption class=" h3 text-center">Lista de motivos</caption>
+    <div class="col-8 mt-4 ">
+
+      <h3 class="text-center">Lista de motivos</h3>
+      <div class="custom-scroll">
+        <table class="table">
             <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Codigo</th>
-                <th scope="col">Detalle</th>
-                <th scope="col">Opciones</th>
+              <tr >
+                <th  scope="col">#</th>
+                <th  scope="col">Codigo</th>
+                <th  scope="col">Detalle</th>
+                <th  scope="col">Opciones</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody style="overflow: hidden;">
               <tr *ngFor="let motivo of motivos; let i = index">
                 <th scope="row">{{i + 1}}</th>
                 <td>{{motivo.codMotivo}}</td>
@@ -38,5 +40,7 @@
               
             </tbody>
           </table>
+
+      </div>
     </div>
 </div>

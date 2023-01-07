@@ -34,7 +34,7 @@ const routes: Routes = [
       { path:'admin-edit/:id', component: EditAdminComponent ,canActivate: [AdminGuard]},
       { path:'permisos', component: PermisosComponent ,canActivate: [AdminGuard]},
       { path:'permisos-new', component: NewPermisoComponent ,canActivate: [AdminGuard]},
-      { path:'permisos-edit', component: EditPermisoComponent ,canActivate: [AdminGuard]},
+      { path:'permisos-edit/:id', component: EditPermisoComponent, canActivate: [AdminGuard]},
       { path:'motivos', component: MotivosComponent ,canActivate: [AdminGuard]},
       { path:'motivos-add', component: AddMotivoComponent ,canActivate: [AdminGuard]},
       { path:'motivos-edit/:id', component: EditMotivoComponent ,canActivate: [AdminGuard]},

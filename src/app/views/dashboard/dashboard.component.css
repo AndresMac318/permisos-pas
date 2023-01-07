@@ -4,11 +4,28 @@
     background-color: #03aaba;
     color: #ffffff;
     height: 100;
-    min-height: 91.6vh;
+    min-height: 90.8vh;
 }
 
 a {
-    text-align: center;
+    text-align: left;
     font-size: large;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    padding-left: 1%;
+    border-radius: 5px;
     /* verde #A8CF45 */
+}
+
+a:hover {
+    background-color: #ffffff;
+    border-radius: 10px;
+    color: rgb(13, 13, 180);
+}
+
+.selectItem {
+    color: rgb(13, 13, 180);
+    background-color: #ffffff;
+    border-radius: 10px;
+    /* border-radius: 5px; */
 }

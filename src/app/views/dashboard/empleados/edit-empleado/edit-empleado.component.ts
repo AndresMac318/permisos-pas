@@ -7,6 +7,7 @@ import { SignatureComponent } from '@syncfusion/ej2-angular-inputs';
 import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
 import * as moment from 'moment';
 import Swal from 'sweetalert2';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit-empleado',
@@ -29,7 +30,12 @@ export class EditEmpleadoComponent implements OnInit {
   @ViewChild('savebuttoncomponent')
   public saveButtonObject!: ButtonComponent;
 
-  constructor(private router: ActivatedRoute, private fb: UntypedFormBuilder, private _es: EmpleadoService) {
+  constructor(
+    private router: ActivatedRoute, 
+    private fb: UntypedFormBuilder,
+    private location: Location, 
+    private _es: EmpleadoService
+  ) {
     this.crearFormulario();
   }
 
@@ -111,7 +117,12 @@ export class EditEmpleadoComponent implements OnInit {
 
   guardarEmpleado(){
     if(this.formEditEmpleado.invalid){
-      alert('Diligencie todos los campos!!');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Diligencie todos los campos!!',
+      });
+      return;
     }
     let body: Empleado = {
       cedula: this.formEditEmpleado.controls['cedula'].value,
@@ -133,7 +144,8 @@ export class EditEmpleadoComponent implements OnInit {
         'Good!',
         'El empleado fue actualizado!',
         'success'
-      )
+      );
+        this.location.back();
     })
     //console.log(body);
     

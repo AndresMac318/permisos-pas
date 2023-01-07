@@ -14,6 +14,10 @@ export class EmpleadosComponent implements OnInit {
 
   empleados: Empleado[] = [];
 
+  options = {
+    autoHide: false, scrollbarMinSize: 100
+  }
+
   constructor(private router: Router, private _es: EmpleadoService) {
     
   }
