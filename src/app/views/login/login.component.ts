@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
     }
 
     this._auths.login(body).subscribe(res => {
+      
       console.log(res);
       if(res.ok === false){
         Swal.fire({
@@ -69,66 +70,27 @@ export class LoginComponent implements OnInit {
         return;
       }
 
-      if(!res.user.idAdministrativo){
+      if (res.user.rol === 'empleado') {
+        console.log('es empleado');
+        sessionStorage.setItem('session_token', 'dCsd%Rg*f2?03DeE');
         sessionStorage.setItem('id', res.user.idEmpleado+'');
         sessionStorage.setItem('rol', res.user.rol);
-        sessionStorage.setItem('cel', res.user.cedula+'');
+        localStorage.setItem('cod', res.user.cedula);
         this._auths.logueado.next(true);
-      }else{
+        this.router.navigateByUrl('dashboard/solicitudes');
+      }
+
+      if (res.user.idAdministrativo) {
+        console.log('es admin');
+        
+        sessionStorage.setItem('session_token', 'dCsd%Rg*f2?03DeE');
         sessionStorage.setItem('id', res.user.idAdministrativo+'');
         sessionStorage.setItem('rol',res.user.rol);
         this._auths.logueado.next(true);
+        this.router.navigateByUrl('/dashboard/empleados');
       }
-      this.router.navigateByUrl('/dashboard/empleados');
-      
-      /* if(res.Error.error.msg === 'credenciales invalidas'){
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Credenciales incorrectas!, ingrese nuevamente',
-        });
-      }else{
-        console.log(res);
-        
-      } */
       
     })
-    /* this._auths.login(body).subscribe(res => {
-      //console.log('mi',res);
-      //this.formLogin.reset();
-      //console.log(res.HttpErrorResponse.error.msg);
-
-      Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Credenciales incorrectas!, ingrese nuevamente',
-        });
-      
-      if(res.status === "404") {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Credenciales incorrectas!, ingrese nuevamente',
-        });
-      }
-      
-      if(res){
-        if(!res.idAdministrativo){
-          sessionStorage.setItem('id', res.idEmpleado+'');
-          sessionStorage.setItem('rol', res.rol);
-          sessionStorage.setItem('cel', res.cedula+'');
-          this._auths.logueado.next(true);
-        }else{
-          sessionStorage.setItem('id', res.idAdministrativo+'');
-          sessionStorage.setItem('rol',res.rol);
-          this._auths.logueado.next(true);
-        }
-        this.router.navigateByUrl('/dashboard/empleados');
-      }else{
-        
-        
-      }
-      
-    }) */
+    
   }
 }

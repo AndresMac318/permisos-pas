@@ -11,6 +11,9 @@ import { DashboardModule } from './views/dashboard/dashboard.module';
 
 
 import { SignatureModule } from '@syncfusion/ej2-angular-inputs';
+import { PerfilComponent } from './views/dashboard-e/perfil/perfil.component';
+import { SolicitudesComponent } from './views/dashboard-e/solicitudes/solicitudes.component';
+import { DetalleSolicitudComponent } from './views/dashboard-e/detalle-solicitud/detalle-solicitud.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +21,9 @@ import { SignatureModule } from '@syncfusion/ej2-angular-inputs';
     NavbarComponent,
     LoginComponent,
     DashboardComponent,
+    PerfilComponent,
+    SolicitudesComponent,
+    DetalleSolicitudComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ɵAPP_ID_RANDOM_PROVIDER } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Empleado } from 'src/app/models/empleado';
 
@@ -7,6 +7,7 @@ import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
 import { EmpleadoService } from 'src/app/services/empleado/empleado.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-empleado',
@@ -15,6 +16,8 @@ import { Location } from '@angular/common';
 })
 export class AddEmpleadoComponent implements OnInit {
 
+  dataHuella: any;
+
   formAddEmpleado!: UntypedFormGroup;
 
   generos: string[] = 
@@ -22,7 +25,7 @@ export class AddEmpleadoComponent implements OnInit {
   'masculino', 'femenino', 'hombre transexual', 'mujer transexual', 'bigenero', 'intersexual', 'no binario', 'prefiero no decir'
   ];
 
-  //roles : string[] = ['talento humano', 'jefe inmediato', 'empleado']; 
+  documentsNum: any ;
 
   @ViewChild('signatureEmpleado')
   public signatureObject!: SignatureComponent;
@@ -42,6 +45,16 @@ export class AddEmpleadoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._es.getCedulas().pipe(
+      map( personas => {
+        let cedulas: any = [];
+        personas.forEach(persona => {
+          cedulas.push(persona.cedula);
+        })
+        personas = cedulas;
+        this.documentsNum = personas;
+      })
+    ).subscribe();
   }
 
   signaturePadChangeState() {
@@ -61,31 +74,39 @@ export class AddEmpleadoComponent implements OnInit {
 
   crearFormulario() {
     this.formAddEmpleado = this.fb.group({
-      apellido1: ['', [Validators.required]],
-      apellido2: ['', [Validators.required]],
-      nombre1: ['', [Validators.required]],
+      idHuella: [''],
+      apellido1: ['', [Validators.required, Validators.minLength(2)]],
+      apellido2: ['', [Validators.required, Validators.minLength(2)]],
+      nombre1: ['', [Validators.required, Validators.minLength(2)]],
       nombre2: ['',],
-      cedula: ['', [Validators.required]],
+      cedula: ['', [Validators.required], Validators.minLength(6)],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      telefono: ['', [Validators.required]],
-      direccion: ['', [Validators.required]],
+      telefono: ['', [Validators.required], Validators.minLength(7)],
+      direccion: ['', [Validators.required], Validators.minLength(6)],
       sexo: ['', Validators.required],
       fnacimiento: ['', [Validators.required]],
-      //?firma: ['', [Validators.required]]
+      firma: ['', [Validators.required]]
     })
   }
 
   public saveSignature() {
-    /* this.signatureObject.save(); */
     let base64: string = this.signatureObject.getSignature();
     if (base64 == null || base64 === "") {
       alert('Ingrese su firma');
     }
     this.formAddEmpleado.get('firma')?.setValue(base64);
-    /* console.log(base64); */
   }
 
   guardarEmpleado() {
+
+    if (this.documentsNum.includes(this.formAddEmpleado.controls['cedula'].value)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'El número de documento ya esta registrado!!',
+      });
+      return;
+    }
 
     if (this.formAddEmpleado.invalid) {
       Swal.fire({
@@ -114,19 +135,67 @@ export class AddEmpleadoComponent implements OnInit {
       direccion: this.formAddEmpleado.controls['direccion'].value,
       sexo: this.formAddEmpleado.controls['sexo'].value,
       fnacimiento: this.formAddEmpleado.controls['fnacimiento'].value,
-      //?firma: this.formAddEmpleado.controls['firma'].value,
+      firma: this.formAddEmpleado.controls['firma'].value,
       rol: 'empleado',
-    };
+    };  
+
     this._es.createEmpleado(body).subscribe(res => {
-      //console.log(res)
-      
       Swal.fire(
         'Good!',
         'El empleado fue creado!',
         'success'
       );
         this.location.back();
+    });
+
+  }
+
+  consulta() {
+
+    /* var opcion = 2;
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.open("POST", "http://localhost/html/php/queryRead.php", true); 
+    xhttp.setRequestHeader("Content-Type", "application/json");
+
+    
+
+    xhttp.onreadystatechange = function() {
+      let id_;
+      if (this.readyState == 4 && this.status == 200) {
+        // Response
+        let data = this.responseText;
+        let lol = JSON.parse(data);
+        id_ = lol[0].id_huella;
+        alert(id_)
+      }
+      return id_;
+      
+    };
+
+    console.log(this.dataHuella);
+    
+
+    var data =  { opcion: opcion, nombre:'', id_huella:'' };
+    xhttp.send(JSON.stringify(data)); */
+    console.log(this.formAddEmpleado.controls['idHuella'].value);
+    
+
+    if(this.formAddEmpleado.controls['idHuella'].value === '' || this.formAddEmpleado.controls['idHuella'].value === null){
+      console.log('ingrese una huella')
+      return;
+    }
+
+    let body = {
+      opcion: 2,
+      nombre: '',
+      id_huella: this.formAddEmpleado.controls['idHuella'].value,
+    } 
+
+    this._es.getHuellaData(body).subscribe(res=>{
+      console.log(res);
     })
+  
 
   }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Empleado } from '../../models/empleado';
 import { ResIDS } from 'src/app/models/resIds';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -17,13 +18,16 @@ export class EmpleadoService {
     return this.http.get<Empleado[]>('http://localhost:3000/empleados');
   }
 
+  getCedulas(){
+    return this.http.get<Empleado[]>('http://localhost:3000/empleados');    
+  } 
+
   createEmpleado(body: Empleado){
     return this.http.post<any>('http://localhost:3000/empleados', body);
   }
 
   updateEmpleado(id: any, body:Empleado){
     console.log(body);
-    
     return this.http.put(`http://localhost:3000/empleados/${id}`, body);
   }
 
@@ -34,6 +38,16 @@ export class EmpleadoService {
   deleteEmpleado(id: any){
     return this.http.delete(`http://localhost:3000/empleados/${id}`);
   }
+
+
+  /* INICIO Consultar huella */
+
+  getHuellaData(body: any){
+    return this.http.post('http://localhost/html/php/queryRead.php', body);
+  }
+
+
+  /* FIN Consultar huella */
 
   /* Admin */
   

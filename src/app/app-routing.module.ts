@@ -4,6 +4,9 @@ import { AppComponent } from './app.component';
 import { AdminGuard } from './guards/admin.guard';
 import { EmpleadosGuard } from './guards/empleados.guard';
 import { GeneralGuard } from './guards/general.guard';
+import { DetalleSolicitudComponent } from './views/dashboard-e/detalle-solicitud/detalle-solicitud.component';
+import { PerfilComponent } from './views/dashboard-e/perfil/perfil.component';
+import { SolicitudesComponent } from './views/dashboard-e/solicitudes/solicitudes.component';
 import { AddAdminComponent } from './views/dashboard/admins/add-admin/add-admin.component';
 import { AdminsComponent } from './views/dashboard/admins/admins.component';
 import { EditAdminComponent } from './views/dashboard/admins/edit-admin/edit-admin.component';
@@ -25,6 +28,7 @@ const routes: Routes = [
   {
     path: 'dashboard', 
     component: DashboardComponent, 
+    canActivate: [GeneralGuard],
     children: [
       { path:'empleados', component: EmpleadosComponent,canActivate: [AdminGuard] },
       { path:'empleado-add', component: AddEmpleadoComponent,canActivate: [AdminGuard] },
@@ -35,11 +39,14 @@ const routes: Routes = [
       { path:'permisos', component: PermisosComponent ,canActivate: [AdminGuard]},
       { path:'permisos-new', component: NewPermisoComponent ,canActivate: [AdminGuard]},
       { path:'permisos-edit/:id', component: EditPermisoComponent, canActivate: [AdminGuard]},
-      { path:'motivos', component: MotivosComponent ,canActivate: [AdminGuard]},
+      { path:'motivos', component: MotivosComponent, canActivate: [AdminGuard] },
+      /* { path:'motivos', component: MotivosComponent ,canActivate: [AdminGuard]}, */
       { path:'motivos-add', component: AddMotivoComponent ,canActivate: [AdminGuard]},
       { path:'motivos-edit/:id', component: EditMotivoComponent ,canActivate: [AdminGuard]},
+      { path:'perfil', component: PerfilComponent},
+      { path:'solicitudes', component: SolicitudesComponent},
+      { path:'detalle/:id', component: DetalleSolicitudComponent},
     ],
-    canActivate: [GeneralGuard]
   },
   { path: '**', pathMatch:'full', redirectTo:'login' }
 ];

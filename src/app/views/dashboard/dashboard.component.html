@@ -1,12 +1,14 @@
 <div class="container-fluid">
     <div class="row h-100">
         <div class="col-2 aside">
-            <a class="list-group-item py-3 ps-2 onItem" routerLink="/dashboard/empleados" routerLinkActive="selectItem"><i class="bi bi-people-fill"></i> Empleados</a>
-            <a class="list-group-item py-3 ps-2" routerLink="/dashboard/admins" routerLinkActive="selectItem"><i class="bi bi-clipboard-data-fill"></i> Administradores</a>
-            <a class="list-group-item py-3 ps-2" routerLink="/dashboard/permisos" routerLinkActive="selectItem"><i class="bi bi-clock-fill"></i> Permisos</a>
-            <a class="list-group-item py-3 ps-2" routerLink="/dashboard/motivos" routerLinkActive="selectItem"><i class="bi bi-stickies-fill"></i> Motivos</a>
-            <!-- <a class="list-group-item py-3 " routerLink="/dashboard/motivos"><i class="bi bi-fingerprint"></i> Asistencias</a> -->
             
+            <a *ngIf="flyUser" class="list-group-item py-3 ps-2 onItem" routerLink="/dashboard/empleados" routerLinkActive="selectItem"><i class="bi bi-people-fill"></i> Empleados</a>
+            <a *ngIf="flyUser" class="list-group-item py-3 ps-2" routerLink="/dashboard/admins" routerLinkActive="selectItem"><i class="bi bi-clipboard-data-fill"></i> Administradores</a>
+            <a *ngIf="flyUser" class="list-group-item py-3 ps-2" routerLink="/dashboard/permisos" routerLinkActive="selectItem"><i class="bi bi-clock-fill"></i> Permisos</a>
+            <a *ngIf="flyUser" class="list-group-item py-3 ps-2" routerLink="/dashboard/motivos" routerLinkActive="selectItem"><i class="bi bi-stickies-fill"></i> Motivos</a>
+            <!-- <a class="list-group-item py-3 " routerLink="/dashboard/motivos"><i class="bi bi-fingerprint"></i> Asistencias</a> -->
+            <a *ngIf="!flyUser" class="list-group-item py-3 ps-2 onItem" routerLink="/dashboard/solicitudes" routerLinkActive="selectItem"><i class="bi bi-people-fill"></i> Solicitudes</a>
+            <a *ngIf="!flyUser" class="list-group-item py-3 ps-2" routerLink="/dashboard/perfil" routerLinkActive="selectItem"><i class="bi bi-clipboard-data-fill"></i> Perfil</a>
         </div>
         <div class="col-10">
             <router-outlet></router-outlet>

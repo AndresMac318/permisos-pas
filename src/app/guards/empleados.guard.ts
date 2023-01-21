@@ -7,17 +7,17 @@ import { Observable } from 'rxjs';
 })
 export class EmpleadosGuard implements CanActivate {
 
-  constructor(private router: Router){
-
-  }
+  constructor(private router: Router){ }
+  
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean{
-      if(sessionStorage.getItem('rol')==='empleados'){
-        return true;
-      }
-      sessionStorage.clear();
-      this.router.navigateByUrl('/login');
+    state: RouterStateSnapshot
+  ): boolean {
+    if(sessionStorage.getItem('rol')==='empleado'){
+      return true;
+    }
+    sessionStorage.clear();
+    this.router.navigateByUrl('/login');
     return false;
   }
   

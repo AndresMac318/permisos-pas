@@ -19,7 +19,9 @@ export class EditEmpleadoComponent implements OnInit {
   formEditEmpleado!: UntypedFormGroup;
   empleado!: Empleado;
   id!:number;
-  generos: string[] = ['masculino', 'femenino', 'otro'];
+  generos: string[] = [
+    'masculino', 'femenino', 'hombre transexual', 'mujer transexual', 'bigenero', 'intersexual', 'no binario', 'prefiero no decir'
+  ];
 
   @ViewChild('signatureEmpleado')
   public signatureObject!: SignatureComponent; 
@@ -43,7 +45,6 @@ export class EditEmpleadoComponent implements OnInit {
     this.router.params.subscribe(params => {
       this.id = params['id'];
       //console.log(this.id);
-      
     });
 
     this._es.getEmpleado(this.id).subscribe(res=>{

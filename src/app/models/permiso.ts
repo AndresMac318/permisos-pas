@@ -7,4 +7,5 @@ export interface Permiso {
     fentrada: string;
     observaciones?: string,
     codMotivo: number,
+    estado?: string
 }

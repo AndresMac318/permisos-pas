@@ -19,7 +19,6 @@ import { EditMotivoComponent } from './motivos/edit-motivo/edit-motivo.component
 import { AdminsComponent } from './admins/admins.component';
 import { AddAdminComponent } from './admins/add-admin/add-admin.component';
 import { EditAdminComponent } from './admins/edit-admin/edit-admin.component';
-import { SimplebarAngularModule } from 'simplebar-angular';
 
 
 @NgModule({
@@ -43,7 +42,6 @@ import { SimplebarAngularModule } from 'simplebar-angular';
     ReactiveFormsModule,
     SignatureModule,
     ButtonModule,
-    SimplebarAngularModule,
   ],
   exports: [
     EmpleadosComponent,

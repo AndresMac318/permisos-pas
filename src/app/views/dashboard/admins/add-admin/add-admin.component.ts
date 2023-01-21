@@ -5,6 +5,7 @@ import { Empleado } from 'src/app/models/empleado';
 import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
 import { EmpleadoService } from 'src/app/services/empleado/empleado.service';
 import Swal from 'sweetalert2';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-admin',
@@ -14,7 +15,8 @@ import Swal from 'sweetalert2';
 export class AddAdminComponent implements OnInit {
 
   formAddAdmin!: UntypedFormGroup;
-  generos: string[] = ['masculino', 'femenino', 'otro'];
+  generos: string[] = ['masculino', 'femenino', 'hombre transexual', 'mujer transexual', 'bigenero', 'intersexual', 'no binario', 'prefiero no decir'];
+  documentsNum: any ;
 
   @ViewChild('signatureEmpleado')
   public signatureObject!: SignatureComponent; 
@@ -30,6 +32,16 @@ export class AddAdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._es.getCedulas().pipe(
+      map( personas => {
+        let cedulas: any = [];
+        personas.forEach(persona => {
+          cedulas.push(persona.cedula);
+        })
+        personas = cedulas;
+        this.documentsNum = personas;
+      })
+    ).subscribe();
   }
 
   signaturePadChangeState(){
@@ -52,13 +64,13 @@ export class AddAdminComponent implements OnInit {
       apellido1: ['', [Validators.required, Validators.minLength(2)]],
       apellido2: ['', [Validators.required, Validators.minLength(2)]],
       nombre1: ['', [Validators.required, Validators.minLength(2)]],
-      nombre2: ['', [Validators.required, Validators.minLength(2)]],
+      nombre2: [''],
       cedula: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       telefono: ['', [Validators.required, Validators.minLength(7)]],
       direccion: ['', [Validators.required, Validators.minLength(6)]],
       sexo: ['', Validators.required],
-      fnacimiento: ['', [Validators.required, Validators.minLength(10)]],
+      fnacimiento: ['', [Validators.required]],
       firma: ['', [Validators.required]],
     })
   }
@@ -72,6 +84,15 @@ export class AddAdminComponent implements OnInit {
   }
 
   guardarAdmin(){
+
+    if (this.documentsNum.includes(this.formAddAdmin.controls['cedula'].value)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'El número de documento ya esta registrado!!',
+      });
+      return;
+    }
     
     if (this.formAddAdmin.invalid) {
       alert('Diligencie todos los campos!!')
@@ -105,7 +126,6 @@ export class AddAdminComponent implements OnInit {
         'success'
       )
     })
-    console.log(body);
     
   }
 

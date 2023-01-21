@@ -7,9 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  flyUser!: boolean;
+
+  constructor() {
+    this.getRole();
+  }
+
 
   ngOnInit(): void {
+  }
+
+  getRole(){
+    if (sessionStorage.getItem('rol') === 'admin') {
+      this.flyUser = true;
+    } else {
+      this.flyUser = false;
+    }
   }
 
 }

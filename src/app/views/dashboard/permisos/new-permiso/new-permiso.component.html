@@ -4,6 +4,13 @@
         <hr>
         <form action="" [formGroup]="formNewPermiso" (ngSubmit)="guardarPermiso()" >
             <div class="row row-cols-2">
+                <!-- xd -->
+                  
+                <div class="form-floating mb-4">
+                    <input type="" class='btn btn-primary btnCargaId ' value="Cargar Datos" (click)="consulta_persona()">
+                </div>                           
+
+                <!-- xd -->
                 <div class="form-floating mb-4">
                     <input type="number" class="form-control" id="floatingInput" autocomplete="off" formControlName="cedAutoriza" >
                     <label for="floatingInput">Cédula autoriza</label>
@@ -23,18 +30,26 @@
                     <label for="floatingInput">Fecha de salida</label>
                 </div>
                 <div class="form-floating mb-4">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" formControlName="observaciones" style="height: 150px"></textarea>
-                    <label for="floatingTextarea2">Observaciones</label>
-                </div>
-                <div class="form-floating mb-4">
                     <input type="datetime-local" class="form-control" id="floatingInput" [min]="fecha" autocomplete="off" formControlName="fentrada" >
                     <label for="floatingInput">Fecha de entrada</label>
+                </div>
+                <div class="form-floating">
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="estado" >
+                      <option value="aprobado">Aprobado</option>
+                      <option value="no aprobado">No aprobado</option>
+                      <option value="sin revizar">Sin revizar</option>
+                    </select>
+                    <label for="floatingSelect">Estado del permiso</label>
+                </div>
+                <div class="form-floating mb-4">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" formControlName="observaciones" style="height: 150px"></textarea>
+                    <label for="floatingTextarea2">Observaciones</label>
                 </div>
 
             </div>
 
+            <!-- * sin firma 
             <div class="row row-cols-5 justify-content-center mb-4" >
-                
                 <button type="button" class="btn btn-primary" (click)="open()" >Firmar</button>
             </div>
 
@@ -51,8 +66,8 @@
                     >
                     </canvas>
                 </div>
-                
-            </div>
+            </div> 
+            -->
             
             <!-- <div class="row justify-content-start mb-4">
                 <div class="col col-8">
