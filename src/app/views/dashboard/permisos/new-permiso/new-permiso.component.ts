@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import { PermisosService } from 'src/app/services/permisos/permisos.service';
 import Swal from 'sweetalert2';
 import { ResUser } from 'src/app/models/resUser';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-new-permiso',
@@ -48,7 +49,8 @@ export class NewPermisoComponent implements OnInit {
     private fb: UntypedFormBuilder, 
     private _es: EmpleadoService, 
     private _ms: MotivosService, 
-    private _ps: PermisosService
+    private _ps: PermisosService,
+    private location: Location
   ) {
     /* this.islogg.subscribe(res=>{
       let idsess=sessionStorage.getItem('id');
@@ -247,11 +249,19 @@ export class NewPermisoComponent implements OnInit {
     }
 
     this._ps.createPermiso(bodyPermiso).subscribe( res => {
-      Swal.fire(
-        'Good!',
-        'El permiso fue creado!',
-        'success'
-      )
+      if (res.status !== true) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Consulte con el administrador!!',
+        });
+      }
+      Swal.fire({
+        icon: 'success',
+        title: 'Good!',
+        text: 'El permiso fue creado!',
+      });
+      this.location.back();
     }); 
 
     //let idempleado = 0;

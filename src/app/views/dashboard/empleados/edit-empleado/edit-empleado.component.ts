@@ -20,9 +20,10 @@ export class EditEmpleadoComponent implements OnInit {
   empleado!: Empleado;
   id!:number;
   generos: string[] = [
-    'masculino', 'femenino', 'hombre transexual', 'mujer transexual', 'bigenero', 'intersexual', 'no binario', 'prefiero no decir'
+    'masculino', 'femenino', 'prefiero no decir'
   ];
 
+  //ref a canvas firma empleado
   @ViewChild('signatureEmpleado')
   public signatureObject!: SignatureComponent; 
 
@@ -49,11 +50,13 @@ export class EditEmpleadoComponent implements OnInit {
 
     this._es.getEmpleado(this.id).subscribe(res=>{
       
-      let {fnacimiento} = res[0];
+      let {fnacimiento} = res.empleado;
       //?console.log('server', fnacimiento);
       var mifecha = moment.utc(fnacimiento).format('YYYY-MM-DD');
       //console.log('mia',mifecha);
-      this.empleado = res[0];
+      this.empleado = res.empleado;
+      console.log(this.empleado);
+      
       this.empleado.fnacimiento = mifecha; 
       this.cargarFormulario();
     })
@@ -104,6 +107,7 @@ export class EditEmpleadoComponent implements OnInit {
     this.formEditEmpleado.controls['sexo'].setValue(this.empleado.sexo);
     this.formEditEmpleado.controls['fnacimiento'].setValue(this.empleado.fnacimiento);
     this.formEditEmpleado.controls['firma'].setValue(this.empleado.firma);
+    this.signatureObject.load(this.empleado.firma!);
   }
 
   public saveSignature(){

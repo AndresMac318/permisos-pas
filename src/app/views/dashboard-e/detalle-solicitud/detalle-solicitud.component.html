@@ -1,1 +1,78 @@
-<p>detalle-solicitud works!</p>
+<div style="display: grid; grid-column: 5; grid-gap:20px; justify-content: center; margin-top: 8%;" >
+
+    <div id="print" style="grid-column: 3/5;">
+        <div class="row">
+            
+            <h4 style="text-align: center;">FUNDACIÓN CLÍNICA DEL RÍO</h4>
+            <h4 style="text-align: center;">SISTEMA DE GESTIÓN DOCUMENTAL</h4>
+        </div>
+
+        <div class="row" *ngIf="fly">
+            <div style="text-align: center; margin-top: 8%;">
+                <img src="../../../../assets/img/logo-small.png" alt="" height="200px" width="200px" >
+            </div>
+            <div class="row" style="margin-top: 8%;" >
+                
+                <ul style="list-style: none">
+                    <li>Fecha: {{solicitud.permiso.fpermiso | date: 'M/d/yyyy'}}</li>
+                    <li>Nombre del Funcionario: {{this.solicitud.permiso.nombre1 +' '+ this.solicitud.permiso.nombre2 +' '+ this.solicitud.permiso.apellido1 +' '+this.solicitud.permiso.apellido2 | titlecase }}</li>
+                    <li>Motivo: {{ solicitud.permiso.detalleMotivo }}</li>
+                    <!-- <li>Telefono: {{ solicitud.permiso.telefono }}</li>
+                    <li>E-mail: {{ solicitud.permiso.email }}</li> -->
+                </ul>
+                
+            </div>
+            
+            <div class="row" style="display: grid; grid-template-columns: 2; margin-top: 6%;" >
+                <table style="border: #3e3c3cb2 1px solid;">
+                    <tr style="text-align: center; border: #3e3c3cb2 1px solid;">
+                        <th style="border: #3e3c3cb2 1px solid;">Fecha y hora de salida</th>
+                        <th style="border: #3e3c3cb2 1px solid;">Fecha y hora de entrada</th>
+                    </tr>
+                    <tr style="text-align: center; border: #3e3c3cb2 1px solid;">
+                        <td style="border: #3e3c3cb2 1px solid;">{{solicitud.permiso.fsalida | date: 'short'}}</td>
+                        <td style="border: #3e3c3cb2 1px solid;">{{solicitud.permiso.fentrada | date: 'short' }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="margin-top: 8%; display: grid; grid-gap:20px; grid-template-columns: repeat(2, 1fr); grid-auto-rows: minmax(50px, auto); text-align: center;">
+                <div style="grid-column: 1; grid-row: 1;" >
+                    <canvas 
+                        class="canvasAdmin"
+                        ejs-signature 
+                        #signatureSolicita id="signature" 
+                        [maxStrokeWidth]="1" 
+                        [minStrokeWidth]="0.4" 
+                        [velocity]="0.9"                             
+                    >
+                    </canvas>
+                    <h5>Firma del solicitante</h5>
+                </div>
+                <div style="grid-column: 2;" >
+                    <canvas 
+                        class="canvasAdmin"
+                        ejs-signature 
+                        #signatureAdmin id="signature" 
+                        [maxStrokeWidth]="1" 
+                        [minStrokeWidth]="0.4" 
+                        [velocity]="0.9"                             
+                    >
+                    </canvas>
+                    <h5>Firma del jefe</h5>
+                </div>
+            </div>
+            
+            
+            <button (click)="printer()" class="btn btn-primary" >Print</button>
+            
+            
+            
+            
+        </div>
+
+
+    </div>
+
+
+</div>

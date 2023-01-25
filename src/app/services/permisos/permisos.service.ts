@@ -23,11 +23,23 @@ export class PermisosService {
   }
 
   createPermiso(body:Permiso){
-    return this.http.post(`http://localhost:3000/permisos`, body);
+    return this.http.post<any>(`http://localhost:3000/permisos`, body);
   }
 
   getPermisosAdmin(id:any){
     return this.http.get<resPermiso[]>(`http://localhost:3000/permisos/${id}`);
+  }
+
+  getPermiso(id:any){
+    return this.http.get(`http://localhost:3000/permisos/employee/${id}`).toPromise();
+  }
+  
+  getPermisoE(id:any){
+    return this.http.get(`http://localhost:3000/permisos/employee2/${id}`).toPromise();
+  }
+
+  editPermiso(id:any, body: any){
+    return this.http.put(`http://localhost:3000/permisos/${id}`, body);
   }
 
   deletePermiso(id: any){

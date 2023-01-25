@@ -1,4 +1,5 @@
 export interface Empleado {
+    idHuella?:   number;
     cedula:      number;
     apellido1:   string;
     apellido2?:  string;

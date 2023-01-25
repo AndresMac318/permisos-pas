@@ -4,6 +4,9 @@ import { Empleado } from '../../models/empleado';
 import { ResIDS } from 'src/app/models/resIds';
 import { map } from 'rxjs/operators';
 
+import { environment } from 'src/environments/environment';
+
+const url_base = environment.url_base;
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +18,15 @@ export class EmpleadoService {
   /* empleado */
 
   getEmpleados(){
-    return this.http.get<Empleado[]>('http://localhost:3000/empleados');
+    return this.http.get<Empleado[]>(`http://localhost:3000/empleados`);
   }
 
   getCedulas(){
-    return this.http.get<Empleado[]>('http://localhost:3000/empleados');    
+    return this.http.get<Empleado[]>(`http://localhost:3000/empleados`);    
   } 
 
   createEmpleado(body: Empleado){
-    return this.http.post<any>('http://localhost:3000/empleados', body);
+    return this.http.post<any>(`http://localhost:3000/empleados`, body);
   }
 
   updateEmpleado(id: any, body:Empleado){
@@ -32,7 +35,7 @@ export class EmpleadoService {
   }
 
   getEmpleado(id:any){
-    return this.http.get<Empleado[]>(`http://localhost:3000/empleados/${id}`);
+    return this.http.get<any>(`http://localhost:3000/empleados/${id}`);
   }
 
   deleteEmpleado(id: any){
@@ -46,28 +49,31 @@ export class EmpleadoService {
     return this.http.post('http://localhost/html/php/queryRead.php', body);
   }
 
-
   /* FIN Consultar huella */
 
   /* Admin */
   
   createAdmin(body: Empleado){
-    return this.http.post<any>('http://localhost:3000/user/admins', body);
+    return this.http.post<any>(`http://localhost:3000/admins`, body);
   }
 
   getAdmins(){
-    return this.http.get<Empleado[]>('http://localhost:3000/user/admins');
+    return this.http.get<Empleado[]>(`http://localhost:3000/admins`);
   }
 
   getAdmin(id:any){
-    return this.http.get<Empleado[]>(`http://localhost:3000/user/empleados/${id}`);
+    return this.http.get<any>(`http://localhost:3000/admins/${id}`);
+  }
+  
+  getAdminID(id:any){
+    return this.http.get(`http://localhost:3000/admins/by/${id}`).toPromise();
   }
 
   updateAdmin(id: any, body:Empleado){
-    return this.http.put(`http://localhost:3000/user/empleados/${id}`, body);
+    return this.http.put(`http://localhost:3000/admins/${id}`, body);
   }
 
   deleteAdmin(id: any){
-    return this.http.delete(`http://localhost:3000/user/admins/${id}`);
+    return this.http.delete(`http://localhost:3000/admins/${id}`);
   }
 }

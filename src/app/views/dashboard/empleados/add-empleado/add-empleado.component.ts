@@ -78,11 +78,11 @@ export class AddEmpleadoComponent implements OnInit {
       apellido1: ['', [Validators.required, Validators.minLength(2)]],
       apellido2: ['', [Validators.required, Validators.minLength(2)]],
       nombre1: ['', [Validators.required, Validators.minLength(2)]],
-      nombre2: ['',],
-      cedula: ['', [Validators.required], Validators.minLength(6)],
+      nombre2: [''],
+      cedula: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      telefono: ['', [Validators.required], Validators.minLength(7)],
-      direccion: ['', [Validators.required], Validators.minLength(6)],
+      telefono: ['', [Validators.required, Validators.minLength(7)]],
+      direccion: ['', [Validators.required, Validators.minLength(6)]],
       sexo: ['', Validators.required],
       fnacimiento: ['', [Validators.required]],
       firma: ['', [Validators.required]]
@@ -124,6 +124,7 @@ export class AddEmpleadoComponent implements OnInit {
     }
 
     const body: Empleado = {
+      idHuella: this.formAddEmpleado.controls['idHuella'].value,
       cedula: this.formAddEmpleado.controls['cedula'].value,
       apellido1: this.formAddEmpleado.controls['apellido1'].value,
       apellido2: this.formAddEmpleado.controls['apellido2'].value,
@@ -139,13 +140,28 @@ export class AddEmpleadoComponent implements OnInit {
       rol: 'empleado',
     };  
 
+    console.log(body);
+    
+
     this._es.createEmpleado(body).subscribe(res => {
+
+      if (res.status === false) {
+        Swal.fire(
+          'Good!',
+          'Ocurrio un error consulte con el administrador, code: 000xcemp!',
+          'success'
+        );
+        this.location.back();
+      }
+      console.log(res);
+      
       Swal.fire(
         'Good!',
         'El empleado fue creado!',
         'success'
       );
         this.location.back();
+
     });
 
   }

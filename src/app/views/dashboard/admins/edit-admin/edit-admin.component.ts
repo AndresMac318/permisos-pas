@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { Empleado } from 'src/app/models/empleado';
 import { EmpleadoService } from 'src/app/services/empleado/empleado.service';
 import { SignatureComponent } from '@syncfusion/ej2-angular-inputs';
@@ -19,7 +20,8 @@ export class EditAdminComponent implements OnInit {
   id!:number;
   generos: string[] = ['masculino', 'femenino', 'otro'];
 
-  @ViewChild('signatureEmpleado')
+  //ref a canvas firma admin
+  @ViewChild('signatureAdmin')
   public signatureObject!: SignatureComponent; 
 
   @ViewChild('clearbuttoncomponent')
@@ -28,7 +30,11 @@ export class EditAdminComponent implements OnInit {
   @ViewChild('savebuttoncomponent')
   public saveButtonObject!: ButtonComponent;
 
-  constructor(private router: ActivatedRoute, private fb: UntypedFormBuilder, private _es: EmpleadoService) {
+  constructor(
+    private router: ActivatedRoute, 
+    private location: Location, 
+    private fb: UntypedFormBuilder, 
+    private _es: EmpleadoService) {
     this.crearFormulario();
   }
 
@@ -39,15 +45,17 @@ export class EditAdminComponent implements OnInit {
       
     });
 
-    this._es.getAdmin(this.id).subscribe(res=>{
+    this._es.getAdmin(this.id).subscribe(res => {
       
-      let {fnacimiento} = res[0];
+      let {fnacimiento} = res;
       //console.log('server', fnacimiento);
       var mifecha = moment.utc(fnacimiento).format('YYYY-MM-DD');
       //console.log('mia',mifecha);
-      this.admin = res[0];
+      this.admin = res;
       this.admin.fnacimiento = mifecha; 
       this.cargarFormulario();
+      console.log(this.admin);
+      
     })
   }
 
@@ -79,7 +87,7 @@ export class EditAdminComponent implements OnInit {
       direccion: ['', [Validators.required]],
       sexo: ['', Validators.required],
       fnacimiento: ['', [Validators.required]],
-      firma: ['', [Validators.required]],
+      firma: [''],
     })
   }
 
@@ -96,6 +104,7 @@ export class EditAdminComponent implements OnInit {
     this.formEditAdmin.controls['sexo'].setValue(this.admin.sexo);
     this.formEditAdmin.controls['fnacimiento'].setValue(this.admin.fnacimiento);
     this.formEditAdmin.controls['firma'].setValue(this.admin.firma);
+    this.signatureObject.load(this.admin.firma!);
   }
 
   public saveSignature(){
@@ -127,8 +136,12 @@ export class EditAdminComponent implements OnInit {
       firma: this.formEditAdmin.controls['firma'].value,
       rol: 'admin',
     }
-    this._es.updateAdmin(this.id, body).subscribe(res=>{
+    console.log(this.id, body);
+    
+    this._es.updateAdmin(this.id, body).subscribe(res => {
       console.log(res);
+      this.location.back();
+
     })
     //console.log(body);
     

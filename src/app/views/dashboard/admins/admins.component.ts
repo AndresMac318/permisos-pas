@@ -30,8 +30,6 @@ export class AdminsComponent implements OnInit {
     this.router.navigateByUrl('/dashboard/admin-add');
   }
 
-  
-
   toEditAdmin(id: any){
     this.router.navigate(['dashboard/admin-edit/', id]);
   }
@@ -45,7 +43,8 @@ export class AdminsComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, eliminalo'
-    }).then((result) => {
+    })
+    .then((result) => {
       if (result.isConfirmed) {
         this._es.deleteAdmin(id).subscribe(res=>{/* ***** */
           console.log(res);
@@ -56,7 +55,6 @@ export class AdminsComponent implements OnInit {
           );
           this.cargarAdmins();
         })
-
       }
     })
   }

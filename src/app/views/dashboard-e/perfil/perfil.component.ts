@@ -16,7 +16,7 @@ export class PerfilComponent implements OnInit {
   empleado!: Empleado;
   id!:any;
   generos: string[] = [
-    'masculino', 'femenino', 'hombre transexual', 'mujer transexual', 'bigenero', 'intersexual', 'no binario', 'prefiero no decir'
+    'masculino', 'femenino', 'prefiero no decir'
   ];
 
   constructor(private fb: FormBuilder, private _es: EmpleadoService, private route: Location ) {
@@ -25,14 +25,14 @@ export class PerfilComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._es.getEmpleado(this.id).subscribe(res=>{
+    this._es.getEmpleado(this.id).subscribe(res => {
       console.log(res);
       
-      let {fnacimiento} = res[0];
+      let {fnacimiento} = res.empleado;
       //?console.log('server', fnacimiento);
       var mifecha = moment.utc(fnacimiento).format('YYYY-MM-DD');
       //console.log('mia',mifecha);
-      this.empleado = res[0];
+      this.empleado = res.empleado;      
       this.empleado.fnacimiento = mifecha; 
       this.cargarFormulario();
     })

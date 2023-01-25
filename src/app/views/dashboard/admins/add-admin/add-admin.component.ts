@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Location } from '@angular/common';
 import { SignatureComponent } from '@syncfusion/ej2-angular-inputs';
 import { Empleado } from 'src/app/models/empleado';
 import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
@@ -15,7 +16,7 @@ import { map } from 'rxjs/operators';
 export class AddAdminComponent implements OnInit {
 
   formAddAdmin!: UntypedFormGroup;
-  generos: string[] = ['masculino', 'femenino', 'hombre transexual', 'mujer transexual', 'bigenero', 'intersexual', 'no binario', 'prefiero no decir'];
+  generos: string[] = ['masculino', 'femenino', 'prefiero no decir'];
   documentsNum: any ;
 
   @ViewChild('signatureEmpleado')
@@ -27,7 +28,11 @@ export class AddAdminComponent implements OnInit {
   @ViewChild('savebuttoncomponent')
   public saveButtonObject!: ButtonComponent;
 
-  constructor(private fb: UntypedFormBuilder, private _es: EmpleadoService) {
+  constructor(
+    private fb: UntypedFormBuilder, 
+    private _es: EmpleadoService,
+    private location: Location
+  ) {
     this.crearFormulario();
   }
 
@@ -61,6 +66,7 @@ export class AddAdminComponent implements OnInit {
 
   crearFormulario(){
     this.formAddAdmin = this.fb.group({
+      idHuella: [''],
       apellido1: ['', [Validators.required, Validators.minLength(2)]],
       apellido2: ['', [Validators.required, Validators.minLength(2)]],
       nombre1: ['', [Validators.required, Validators.minLength(2)]],
@@ -105,6 +111,7 @@ export class AddAdminComponent implements OnInit {
       });
     }
     const body : Empleado = {
+      idHuella: this.formAddAdmin.controls['idHuella'].value,
       cedula: this.formAddAdmin.controls['cedula'].value,
       apellido1: this.formAddAdmin.controls['apellido1'].value,
       apellido2: this.formAddAdmin.controls['apellido2'].value,
@@ -119,14 +126,47 @@ export class AddAdminComponent implements OnInit {
       firma: this.formAddAdmin.controls['firma'].value,
       rol: 'admin',
     };
+
     this._es.createAdmin(body).subscribe(res => {
-      Swal.fire(
-        'Good!',
-        'El admin fue creado!',
-        'success'
-      )
+      if (res.status === false) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Ocurrio un error!',
+          footer: res.msg
+        });
+      }
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Ok!',
+        text: 'Admin agregado',
+      });
+      this.location.back();
+
+
     })
     
+  }
+
+  consulta(){
+    console.log(this.formAddAdmin.controls['idHuella'].value);
+    
+
+    if(this.formAddAdmin.controls['idHuella'].value === '' || this.formAddAdmin.controls['idHuella'].value === null){
+      console.log('ingrese una huella')
+      return;
+    }
+
+    let body = {
+      opcion: 2,
+      nombre: '',
+      id_huella: this.formAddAdmin.controls['idHuella'].value,
+    } 
+
+    this._es.getHuellaData(body).subscribe(res=>{
+      console.log(res);
+    })
   }
 
 }

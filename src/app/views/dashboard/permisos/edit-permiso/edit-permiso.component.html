@@ -4,14 +4,14 @@
         <hr>
         <form action="" [formGroup]="formEditPermiso" (ngSubmit)="guardarPermiso()" >
             <div class="row row-cols-2">
-                <div class="form-floating mb-4">
+                <!-- <div class="form-floating mb-4">
                     <input type="number" class="form-control" id="floatingInput" autocomplete="off" formControlName="cedAutoriza" >
                     <label for="floatingInput">Cédula autoriza</label>
                 </div>
                 <div class="form-floating mb-4">
                     <input type="number" class="form-control" id="floatingInput" autocomplete="off" formControlName="cedSolicita" >
                     <label for="floatingInput">Cédula del solicitante</label>
-                </div>
+                </div> -->
                 <div class="form-floating">
                     <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="codMotivo" >
                       <option *ngFor="let motivo of motivos" [value]="motivo.codMotivo">{{motivo.detalleMotivo}}</option>
@@ -23,17 +23,24 @@
                     <label for="floatingInput">Fecha de salida</label>
                 </div>
                 <div class="form-floating mb-4">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" formControlName="observaciones" style="height: 150px"></textarea>
-                    <label for="floatingTextarea2">Observaciones</label>
-                </div>
-                <div class="form-floating mb-4">
                     <input type="datetime-local" class="form-control" id="floatingInput" [min]="fecha" autocomplete="off" formControlName="fentrada" >
                     <label for="floatingInput">Fecha de entrada</label>
+                </div>
+                <div class="form-floating">
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="estado" >
+                        <option value="aprobado">Aprobado</option>
+                        <option value="no aprobado">No Aprobado</option>
+                    </select>
+                    <label for="floatingSelect">Estado</label>
+                </div>
+                <div class="form-floating mb-4">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" formControlName="observaciones" style="height: 150px"></textarea>
+                    <label for="floatingTextarea2">Observaciones</label>
                 </div>
 
             </div>
 
-            <div class="row row-cols-5 justify-content-center mb-4" >
+            <!-- <div class="row row-cols-5 justify-content-center mb-4" >
                 <button type="button" class="btn btn-primary" (click)="open()" >Firmar</button>
             </div>
 
@@ -50,8 +57,7 @@
                     >
                     </canvas>
                 </div>
-                
-            </div>
+            </div> -->
             
             <!-- <div class="row justify-content-start mb-4">
                 <div class="col col-8">
@@ -70,7 +76,7 @@
 
             <div class="row justify-content-center mb-4">
                 <div class="col-4">
-                    <button type="submit" class="btn btn-success">Guardar permiso</button>
+                    <button type="submit" class="btn btn-success">Actualizar Permiso</button>
                 </div>
                 
             </div>
