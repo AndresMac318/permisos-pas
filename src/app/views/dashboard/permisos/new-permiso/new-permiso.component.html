@@ -1,16 +1,17 @@
 <div class="row justify-content-center">
-    <div class="col-8 mt-4">
+    <div class="col-10 mt-4">
         <h2>Nuevo permiso</h2>
         <hr>
-        <form action="" [formGroup]="formNewPermiso" (ngSubmit)="guardarPermiso()" >
+        <form action="" [formGroup]="formNewPermiso" (ngSubmit)="guardarPermiso()">
+            <!-- xd -->
+            <div class="form-floating mb-4">
+                <button type="button" class='btn btn-primary btnCargaId' value="Cargar Datos" (click)="consulta_empleado()">Cargar Por Huella</button>
+            </div>                           
+            <!-- xd -->
+            
             <div class="row row-cols-2">
-                <!-- xd -->
-                  
-                <div class="form-floating mb-4">
-                    <input type="" class='btn btn-primary btnCargaId ' value="Cargar Datos" (click)="consulta_persona()">
-                </div>                           
-
-                <!-- xd -->
+                
+                
                 <div class="form-floating mb-4">
                     <input type="number" class="form-control" id="floatingInput" autocomplete="off" formControlName="cedAutoriza" >
                     <label for="floatingInput">Cédula autoriza</label>
@@ -40,11 +41,44 @@
                     </select>
                     <label for="floatingSelect">Estado del permiso</label>
                 </div>
-                <div class="form-floating mb-4">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" formControlName="observaciones" style="height: 150px"></textarea>
-                    <label for="floatingTextarea2">Observaciones</label>
-                </div>
+                
 
+            </div>
+
+            <div class="form-floating mb-4">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" formControlName="observaciones" style="height: 150px"></textarea>
+                <label for="floatingTextarea2">Observaciones</label>
+            </div>
+
+            <div class="row row-cols-12 g-4 justify-content-center mb-4">
+                <div class="col-sm-12 col-lg-6 d-flex justify-content-center">
+                    <div>
+                        <canvas 
+                            class="canvasAdmin"
+                            ejs-signature 
+                            #signatureSolicita id="signature" 
+                            [maxStrokeWidth]="1" 
+                            [minStrokeWidth]="0.4" 
+                            [velocity]="0.9"                             
+                            >
+                        </canvas>
+                        <h6 class="">Firma del Empleado</h6>
+                    </div>
+                </div>                
+                <div class="col-sm-12 col-lg-6 d-flex justify-content-center">
+                    <div>
+                        <canvas 
+                            class="canvasAdmin"
+                            ejs-signature 
+                            #signatureAutoriza id="signature" 
+                            [maxStrokeWidth]="1" 
+                            [minStrokeWidth]="0.4" 
+                            [velocity]="0.9"                             
+                            >
+                        </canvas>
+                        <h6 class="">Firma del Jefe Inmediato</h6>
+                    </div>
+                </div>                              
             </div>
 
             <!-- * sin firma 
@@ -84,7 +118,7 @@
             </div> -->
 
             <div class="row justify-content-center mb-4">
-                <div class="col-4">
+                <div class="col-4 d-flex justify-content-center">
                     <button type="submit" class="btn btn-success">Guardar permiso</button>
                 </div>
                 

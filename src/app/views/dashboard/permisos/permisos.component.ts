@@ -33,7 +33,7 @@ export class PermisosComponent implements OnInit {
   cargarPermisos(id:any){
     this._ps.getPermisosAdmin(id).subscribe(res=>{
       this.permisos=res;
-      console.log(this.permisos);
+      //console.log(this.permisos);
     })
   }
 
@@ -43,7 +43,7 @@ export class PermisosComponent implements OnInit {
 
   deletePermiso(id:any){
     
-    console.log(id);
+    //console.log(id);
     
     Swal.fire({
       title: '¿Estas seguro de realizar esta acción?',

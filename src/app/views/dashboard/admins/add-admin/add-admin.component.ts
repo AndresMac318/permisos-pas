@@ -19,6 +19,8 @@ export class AddAdminComponent implements OnInit {
   generos: string[] = ['masculino', 'femenino', 'prefiero no decir'];
   documentsNum: any ;
 
+  respuestaHuella!: any;
+
   @ViewChild('signatureEmpleado')
   public signatureObject!: SignatureComponent; 
 
@@ -68,23 +70,28 @@ export class AddAdminComponent implements OnInit {
     this.formAddAdmin = this.fb.group({
       idHuella: [''],
       apellido1: ['', [Validators.required, Validators.minLength(2)]],
-      apellido2: ['', [Validators.required, Validators.minLength(2)]],
+      apellido2: [''],
       nombre1: ['', [Validators.required, Validators.minLength(2)]],
       nombre2: [''],
       cedula: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       telefono: ['', [Validators.required, Validators.minLength(7)]],
-      direccion: ['', [Validators.required, Validators.minLength(6)]],
+      direccion: ['', [Validators.required, Validators.minLength(5)]],
       sexo: ['', Validators.required],
       fnacimiento: ['', [Validators.required]],
-      firma: ['', [Validators.required]],
+      firma: [''],
     })
   }
 
   public saveSignature(){
     let base64: string = this.signatureObject.getSignature();
     if (base64 == null || base64==="") {
-      alert('Ingrese su firma');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Su firma es requerida!',
+      });
+      return;
     }
     this.formAddAdmin.get('firma')?.setValue(base64);
   }
@@ -149,24 +156,22 @@ export class AddAdminComponent implements OnInit {
     
   }
 
-  consulta(){
-    console.log(this.formAddAdmin.controls['idHuella'].value);
-    
-
-    if(this.formAddAdmin.controls['idHuella'].value === '' || this.formAddAdmin.controls['idHuella'].value === null){
-      console.log('ingrese una huella')
-      return;
-    }
+  async consulta(){
 
     let body = {
-      opcion: 2,
-      nombre: '',
-      id_huella: this.formAddAdmin.controls['idHuella'].value,
+      opcion: 1,
+      nombre: ''
     } 
 
-    this._es.getHuellaData(body).subscribe(res=>{
+    this.respuestaHuella = await this._es.getHuellaData(body);
+    console.log(this.respuestaHuella);
+    this.formAddAdmin.controls['idHuella'].setValue(this.respuestaHuella[0].id_huella);
+    
+    /* this._es.getHuellaData(body).subscribe(res => {
       console.log(res);
-    })
+      respuesta de la data con [{id: ?, id_huella: ?}]
+      //this.formAddAdmin.controls['id_huella'].setValue(res)
+    }) */
   }
 
 }

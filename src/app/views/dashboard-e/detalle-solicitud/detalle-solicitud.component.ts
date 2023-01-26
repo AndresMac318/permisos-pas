@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PermisosService } from 'src/app/services/permisos/permisos.service';
 import * as moment from 'moment';
@@ -10,20 +10,29 @@ import { SignatureComponent } from '@syncfusion/ej2-angular-inputs';
   templateUrl: './detalle-solicitud.component.html',
   styleUrls: ['./detalle-solicitud.component.css']
 })
-export class DetalleSolicitudComponent implements OnInit, AfterViewInit {
+export class DetalleSolicitudComponent implements OnInit {
 
   idSolicitud!: number;
+
   solicitud!:any;
   infoAdmin!: any;
   fly!: boolean;
 
-  newSalida: any;
-  newEntrada: any;
+  nonAutorized = true;
 
-  @ViewChild('signatureSolicita')
+  newSalida!: any;
+  newEntrada!: any;
+
+  firmaAutoriza!: any;
+  firmaSolicita!: any;
+
+  fechaNow = new Date();
+  dateHeader = moment.utc(this.fechaNow.setMinutes(this.fechaNow.getMinutes() + this.fechaNow.getTimezoneOffset())).format('DD-MM-YYYY');
+
+  @ViewChild('signatureAutoriza')
   public signatureObject!: SignatureComponent;
   
-  @ViewChild('signatureAdmin')
+  @ViewChild('signatureSolicita')
   public signatureObject2!: SignatureComponent;
 
   constructor(
@@ -31,65 +40,46 @@ export class DetalleSolicitudComponent implements OnInit, AfterViewInit {
     private _permisoS: PermisosService,
     private _empleadosS: EmpleadoService
     ) {
-    this.router.params.subscribe(params => {
-      this.idSolicitud = params['id'];
-      console.log(this.idSolicitud);
-    });
-    this.getSolicitud();
+  
   }
 
   ngOnInit(): void {
-    
+    this.router.params.subscribe(params => {
+      this.idSolicitud = params['id'];
+      this.getSolicitud();
+    });
+    // realizar loaders mientras se carga la info de la data
   }
-
-  ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
-    //this.cargarFirmas(this.solicitud.permiso.firma, this.infoAdmin.admin.firma);
-  }
-
-
 
   async getSolicitud(){
     this.solicitud = await this._permisoS.getPermisoE(this.idSolicitud);
     this.infoAdmin = await this._empleadosS.getAdminID(this.solicitud.permiso.idAdministrativo);
 
-
     console.log(this.solicitud);
     console.log(this.infoAdmin);
+
+
+    if (this.solicitud.permiso.estado === 'no aprobado') {
+      this.nonAutorized = false;
+    }
     
     let fechasal = Date.parse(this.solicitud.permiso.fsalida);
     let fechaent = Date.parse(this.solicitud.permiso.fentrada);
-    let firma1 = await this.solicitud.permiso.firma;
-    let firma2 = await this.infoAdmin.admin.firma;
-    
-    console.log(firma1);
-    console.log(firma2);
-    
-    //this.cargarFirmas(firma1+'', firma2+'');
-    
-    //this.signatureObject.load(this.solicitud.permiso.firma!);
-    //this.signatureObject2.load(this.infoAdmin.admin.firma!);
 
     this.newSalida = moment.utc(fechasal).format('YYYY-MM-DD HH:MM:SS');
     this.newEntrada = moment.utc(fechaent).format('YYYY-MM-DD HH:MM:SS');
     this.fly = true;
-    //console.log(this.solicitud);
-    
-  }
+    this.cargarFirmas();
+  }  
 
-  cargarFirmas(firmaE: any, firmaA: any){
-    console.log(firmaE);
-    
-    if (firmaE === null || firmaE === undefined) {
-      alert('no se cargaron');
-      return;
-    }
-    this.signatureObject.load(firmaE);
-    this.signatureObject2.load(firmaA);
+  cargarFirmas(){
+    this.firmaAutoriza = this.infoAdmin.admin.firma; 
+    this.firmaSolicita = this.solicitud.permiso.firma;   
+    this.signatureObject.load(this.infoAdmin.admin.firma);
+    this.signatureObject2.load(this.firmaSolicita);
+    /* this.signatureObject.load(this.firmaAutoriza);
+    this.signatureObject2.load(this.firmaSolicita); */
   }
-
-  
 
   printer() {
     const printContent = document.getElementById("print");

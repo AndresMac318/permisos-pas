@@ -2,23 +2,25 @@
     <div class="col-8 mt-4">
         <h2>Crear empleado</h2>
         <hr>
-        <form action="" [formGroup]="formAddEmpleado" (ngSubmit)="guardarEmpleado()" >
-            <!-- xd -->
-            
-            <div class="mb-3">
-                <div class="row">
-                    <div class="col form-floating">
-                        <input type="number" class="form-control" id="floatingInput" autocomplete="off" formControlName="idHuella" >
-                        <label for="floatingInput">ID Huella</label>
-                    </div>       
-                    <div class="col">
-                        <input type="button" class='btn btn-primary btnCargaId ' value="Cargar" (click)="consulta()">
-                    </div>                           
-                </div>
-            </div>
-            
 
+        <form action="" [formGroup]="formAddEmpleado" (ngSubmit)="guardarEmpleado()" >
+            
             <!-- xd -->
+            
+            <div class="row row-cols-4 mb-3">
+            
+                <div class="col form-floating">
+                    <input type="number" class="form-control" id="floatingInput" autocomplete="off" formControlName="idHuella" >
+                    <label for="floatingInput">ID Huella</label>
+                </div>       
+                <div class="col">
+                    <input style="height: 100%;" (click)="consultaH()" type="button" class='btn btn-primary btnCargaId' value="Asignar Huella">
+                </div>                           
+                
+            </div>
+        
+            <!-- xd -->
+            
             <div class="row row-cols-2">
                 <div class="form-floating mb-4">
                     <input type="text" class="form-control" id="floatingInput" autocomplete="off" formControlName="apellido1" >
@@ -92,8 +94,8 @@
                         </button>
                     </span>
                     <span style="float: left;" >
-                        <button type="button" ejs-button #savebuttoncomponent [disabled]="true" cssClass="e-info" class="ms-2" (click)="saveSignature()" >
-                            Guardar
+                        <button style="display: none;" type="button" ejs-button #savebuttoncomponent [disabled]="true" cssClass="e-info" class="ms-2"  >
+                            
                         </button>
                     </span>
                 </div>
@@ -103,9 +105,8 @@
 
             <div class="row justify-content-center mb-4">
                 <div class="col-4">
-                    <button type="submit" class="btn btn-success">Guardar empleado</button>
+                    <button (click)="saveSignature()" type="submit" class="btn btn-success">Guardar empleado</button>
                 </div>
-                
             </div>
             
             

@@ -31,6 +31,8 @@ export class NewPermisoComponent implements OnInit {
   fecha = moment.utc(this.fechaNow.setMinutes(this.fechaNow.getMinutes() + this.fechaNow.getTimezoneOffset())).format('YYYY-MM-DD HH:MM:SS')
   firma54!:string;
 
+  respuestaHuella!: any;
+
   //idAdmin = new BehaviorSubject<number>(0);
   //idEmpleado = new BehaviorSubject<number>(0);
   idNew:any;
@@ -38,6 +40,7 @@ export class NewPermisoComponent implements OnInit {
 
   motivos: Motivo[]= [];
   documentsNum: any;
+  documentsAdmin: any;
 
   @ViewChild('signatureAutoriza')
   public signatureObject!: SignatureComponent;
@@ -52,26 +55,31 @@ export class NewPermisoComponent implements OnInit {
     private _ps: PermisosService,
     private location: Location
   ) {
-    /* this.islogg.subscribe(res=>{
-      let idsess=sessionStorage.getItem('id');
-      if(idsess){
-        this.userActive.cedula;
-      }
-    }) */
-    console.log('constructor:');
+
+    /* this._es.getAdmins().pipe(
+      map(admins => {
+        let cedulasAdmin: any;
+        admins.forEach((admin: any) => {
+          cedulasAdmin.push(admin.cedula);
+        });
+        admins = cedulasAdmin;
+        this.documentsAdmin = admins;
+      })
+    ).subscribe(); */
     
     // Cargar motivos
     this._ms.getMotivos().subscribe(res => {
       this.motivos = res;
     });
-    
+    this.crearFormulario();
   }
 
   ngOnInit(): void {
-    console.log('oninit:');
+    //console.log('oninit:');
     this.cargarUserLog();  
-    this.crearFormulario();
+    
     this.obtenerCedulas();
+    
   }
 
   obtenerCedulas(){
@@ -83,7 +91,10 @@ export class NewPermisoComponent implements OnInit {
         });
         personas = cedulas;
         this.documentsNum = personas;
+        
+        //console.log('cedula activo', this.userActive.cedula);
         this.documentsNum.push(this.userActive.cedula);
+        
         //console.log(this.documentsNum);
       })
     ).subscribe();
@@ -98,8 +109,8 @@ export class NewPermisoComponent implements OnInit {
     // !retorna datos de la persona
     this._ps.getSolicitante(body).subscribe(res=>{
       this.userActive = res;
-      console.log('useractivo ok');
-      console.log(this.userActive);
+      //console.log('data admin cargada');
+      //console.log(this.userActive);
       this.cargarFormulario(res);
     });
   }
@@ -163,15 +174,12 @@ export class NewPermisoComponent implements OnInit {
   // ? Carga la cedula del admin en el formulario
   cargarFormulario(res:ResUser){
     if(res){
-      console.log('se carga la cedula del admin:');  
-      console.log(res.cedula);
+      //console.log('se carga la cedula del admin:');  
+      //console.log(res.cedula);
       this.formNewPermiso.controls['cedAutoriza'].setValue(res.cedula);
     }
   }
 
-  
-
-  
   async guardarPermiso(){
     /* if (!this.bandera) {
       alert('Firme el formulario para guardar el permiso');
@@ -203,32 +211,6 @@ export class NewPermisoComponent implements OnInit {
       });
       return;
     }
-
-
-    /* const getCedulaEmpleado = () => {
-      
-      let cedulas = {
-        cedulaAdmin: this.formNewPermiso.controls['cedAutoriza'].value,// pasar cedula o id del admin logueado
-        cedulaEmpleado: this.formNewPermiso.controls['cedSolicita'].value
-      }
-
-      console.log(cedulas);
-      
-  
-      //this._ps.getIds(cedulas).then(async res => {
-      //  console.log(res)
-      //  //await this.idEmpleado = res?.EmpleadoRows
-      //  //await this.idAdmin = res?.idAdministrativo
-      //})
-      //
-      // this._ps.getIds(cedulas).subscribe( res => {
-      //  this.idEmpleado.next(res.EmpleadoRows);  
-      //  this.idAdmin.next(res.idAdministrativo);
-      //  this.bandera = true;
-      //}); 
-
-    } */
-    //await getCedulaEmpleado();
     
     let cedulas = {
       cedulaAdmin: this.formNewPermiso.controls['cedAutoriza'].value,// pasar cedula o id del admin logueado
@@ -248,6 +230,9 @@ export class NewPermisoComponent implements OnInit {
       estado: this.formNewPermiso.controls['estado'].value,
     }
 
+    console.log(bodyPermiso);
+    
+
     this._ps.createPermiso(bodyPermiso).subscribe( res => {
       if (res.status !== true) {
         Swal.fire({
@@ -263,32 +248,27 @@ export class NewPermisoComponent implements OnInit {
       });
       this.location.back();
     }); 
-
-    //let idempleado = 0;
-
-    /* this.idEmpleado.subscribe( res => {
-      if(res > 0){
-        idempleado = res;
-        console.log('idempleado',res);
-      }
-    }); */
-
-    /* let body: Permiso = {
-      idAdministrativo: this.userActive.idAdministrativo,
-      //idAdministrativo: idadmin,
-      idEmpleado: idempleado,
-      fpermiso: moment.utc(this.fechaNow.setMinutes(this.fechaNow.getMinutes() + this.fechaNow.getTimezoneOffset())).format('YYYY-MM-DD'),
-      fsalida: this.formNewPermiso.controls['fsalida'].value,
-      fentrada: this.formNewPermiso.controls['fentrada'].value,
-      observaciones: this.formNewPermiso.controls['observaciones'].value,
-      codMotivo: this.formNewPermiso.controls['codMotivo'].value,
-      estado: this.formNewPermiso.controls['estado'].value,
-    } */
-
   }
 
-  consulta_persona() {
-    var opcion = 3;
+
+  async consulta_empleado() {
+    /* let body = {
+      opcion: 2,
+      nombre: '',
+      //id_huella: ''
+    } */
+    this.respuestaHuella = await this._ps.getDataFinger();
+    //console.log(this.respuestaHuella[0]);
+
+    const newCedula = await this.respuestaHuella[0].cedula;
+
+    this.formNewPermiso.controls['cedSolicita'].setValue(newCedula);
+
+    this.signatureObject.load(this.userActive.firma);
+    this.signatureObject2.load(this.respuestaHuella[0].firma);
+    
+    
+    /* var opcion = 2;
     var xhttp = new XMLHttpRequest();
     xhttp.open("POST", "http://localhost/html/php/queryRead.php", true); 
     xhttp.setRequestHeader("Content-Type", "application/json");
@@ -297,11 +277,14 @@ export class NewPermisoComponent implements OnInit {
         // Response
         var data = this.responseText;
         var lol = JSON.parse(data);
-        var id_ = lol[0].cedula;
-        console.log(lol)
+        //var id_ = lol[0].cedula;
+
+        //aqui se imprime la respuesta de la persona qque ponga la ultima huella si tiene la huella asignada
+        console.log(lol[0])
+  
       }
     };
     var data =  { opcion: opcion, nombre:'',id_huella:'' };
-    xhttp.send(JSON.stringify(data));
+    xhttp.send(JSON.stringify(data)); */
   }
 }

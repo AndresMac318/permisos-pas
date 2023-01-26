@@ -76,8 +76,8 @@
                         </button>
                     </span>
                     <span style="float: left;" >
-                        <button type="button" ejs-button #savebuttoncomponent [disabled]="true" cssClass="e-info" class="ms-2" (click)="saveSignature()" >
-                            Guardar
+                        <button style="display: none;" type="button" ejs-button #savebuttoncomponent [disabled]="true" cssClass="e-info" class="ms-2" (click)="saveSignature()" >
+                            
                         </button>
                     </span>
                 </div>
@@ -87,7 +87,7 @@
 
             <div class="row justify-content-center mb-4">
                 <div class="col-4">
-                    <button type="submit" class="btn btn-success">Actualizar</button>
+                    <button (click)="saveSignature()" type="submit" class="btn btn-success">Actualizar</button>
                 </div>
                 
             </div>

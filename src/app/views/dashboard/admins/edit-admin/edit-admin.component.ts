@@ -7,6 +7,7 @@ import { EmpleadoService } from 'src/app/services/empleado/empleado.service';
 import { SignatureComponent } from '@syncfusion/ej2-angular-inputs';
 import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
 import * as moment from 'moment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-admin',
@@ -54,7 +55,7 @@ export class EditAdminComponent implements OnInit {
       this.admin = res;
       this.admin.fnacimiento = mifecha; 
       this.cargarFormulario();
-      console.log(this.admin);
+      //console.log(this.admin);
       
     })
   }
@@ -110,7 +111,7 @@ export class EditAdminComponent implements OnInit {
   public saveSignature(){
     /* this.signatureObject.save(); */
     let base64: string = this.signatureObject.getSignature();
-    if (base64 == null || base64==="") {
+    if (base64 === null || base64==="") {
       alert('Ingrese su firma');
     }
     this.formEditAdmin.get('firma')?.setValue(base64);
@@ -136,10 +137,23 @@ export class EditAdminComponent implements OnInit {
       firma: this.formEditAdmin.controls['firma'].value,
       rol: 'admin',
     }
-    console.log(this.id, body);
+    //console.log(this.id, body);
     
-    this._es.updateAdmin(this.id, body).subscribe(res => {
-      console.log(res);
+    this._es.updateAdmin(this.id, body).subscribe((res: any) => {
+      if (res.status === 'OK: Usuario actualizado') {
+        Swal.fire(
+          'Good!',
+          'El administrador fue editado!',
+          'success'
+        );
+      }else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Ocurrio un error consulte con el administrador, code: 000xcemp!',
+        });
+      }
+      //console.log(res);
       this.location.back();
 
     })

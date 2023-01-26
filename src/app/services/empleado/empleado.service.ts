@@ -46,7 +46,7 @@ export class EmpleadoService {
   /* INICIO Consultar huella */
 
   getHuellaData(body: any){
-    return this.http.post('http://localhost/html/php/queryRead.php', body);
+    return this.http.post('http://localhost/html/php/queryRead.php', body).toPromise();
   }
 
   /* FIN Consultar huella */
@@ -76,4 +76,5 @@ export class EmpleadoService {
   deleteAdmin(id: any){
     return this.http.delete(`http://localhost:3000/admins/${id}`);
   }
+
 }

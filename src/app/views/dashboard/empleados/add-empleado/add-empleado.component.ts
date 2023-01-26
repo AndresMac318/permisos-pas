@@ -15,17 +15,15 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./add-empleado.component.css']
 })
 export class AddEmpleadoComponent implements OnInit {
-
-  dataHuella: any;
-
+  
   formAddEmpleado!: UntypedFormGroup;
-
-  generos: string[] = 
-  [
-  'masculino', 'femenino', 'hombre transexual', 'mujer transexual', 'bigenero', 'intersexual', 'no binario', 'prefiero no decir'
-  ];
-
+  
+  generos: string[] = ['masculino', 'femenino', 'prefiero no decir'];
+  
   documentsNum: any ;
+  respuestaHuella: any;
+
+  
 
   @ViewChild('signatureEmpleado')
   public signatureObject!: SignatureComponent;
@@ -166,7 +164,17 @@ export class AddEmpleadoComponent implements OnInit {
 
   }
 
-  consulta() {
+  async consultaH() {
+
+    let body = {
+      opcion: 1,
+      nombre: ''
+    }
+
+    this.respuestaHuella = await this._es.getHuellaData(body);
+    
+    this.formAddEmpleado.controls['idHuella'].setValue(this.respuestaHuella[0].id_huella);
+    console.log(this.respuestaHuella);
 
     /* var opcion = 2;
     var xhttp = new XMLHttpRequest();
@@ -194,25 +202,21 @@ export class AddEmpleadoComponent implements OnInit {
 
     var data =  { opcion: opcion, nombre:'', id_huella:'' };
     xhttp.send(JSON.stringify(data)); */
-    console.log(this.formAddEmpleado.controls['idHuella'].value);
+    //console.log(this.formAddEmpleado.controls['idHuella'].value);
     
 
-    if(this.formAddEmpleado.controls['idHuella'].value === '' || this.formAddEmpleado.controls['idHuella'].value === null){
+    /* if(this.formAddEmpleado.controls['idHuella'].value === '' || this.formAddEmpleado.controls['idHuella'].value === null){
       console.log('ingrese una huella')
       return;
-    }
+    } */
 
-    let body = {
-      opcion: 2,
-      nombre: '',
-      id_huella: this.formAddEmpleado.controls['idHuella'].value,
-    } 
-
-    this._es.getHuellaData(body).subscribe(res=>{
-      console.log(res);
-    })
-  
-
+    //const idHuella = await this._es.getHuellaData(body) 
+    
+    
+    /* console.log(res[0].id_huella);
+      this.inputElement.nativeElement = res[0].id_huella; */
+      //this.formAddEmpleado.controls['id_huella'].setValue(res)
+      //console.log(res);
   }
 
 }

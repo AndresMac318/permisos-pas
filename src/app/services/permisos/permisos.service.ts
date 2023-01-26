@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Permiso } from 'src/app/models/permiso';
 import { ResLogin } from 'src/app/models/ResLogin';
 import { ResUser } from 'src/app/models/resUser';
@@ -37,6 +37,23 @@ export class PermisosService {
   getPermisoE(id:any){
     return this.http.get(`http://localhost:3000/permisos/employee2/${id}`).toPromise();
   }
+
+  /* getDataFinger(body: any){
+    return this.http.post('http://localhost/html/php/queryRead.php', body).toPromise();
+  } */
+
+  //consultaPersona(): Observable<any> {
+  getDataFinger(){
+    const opcion = 2;
+    const data = { opcion: opcion, nombre:'', id_huella:'' };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post('http://localhost/html/php/queryRead.php', data, httpOptions).toPromise();
+  }
+
 
   editPermiso(id:any, body: any){
     return this.http.put(`http://localhost:3000/permisos/${id}`, body);

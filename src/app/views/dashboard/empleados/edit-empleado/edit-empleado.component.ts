@@ -55,7 +55,7 @@ export class EditEmpleadoComponent implements OnInit {
       var mifecha = moment.utc(fnacimiento).format('YYYY-MM-DD');
       //console.log('mia',mifecha);
       this.empleado = res.empleado;
-      console.log(this.empleado);
+      //console.log(this.empleado);
       
       this.empleado.fnacimiento = mifecha; 
       this.cargarFormulario();
@@ -81,16 +81,16 @@ export class EditEmpleadoComponent implements OnInit {
     //console.log('crear form');
     this.formEditEmpleado = this.fb.group({
       apellido1: ['', [Validators.required]],
-      apellido2: ['', [Validators.required]],
+      apellido2: [''],
       nombre1: ['', [Validators.required]],
-      nombre2: ['', [Validators.required]],
+      nombre2: [''],
       cedula: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       telefono: ['', [Validators.required]],
       direccion: ['', [Validators.required]],
       sexo: ['', Validators.required],
       fnacimiento: ['', [Validators.required]],
-      firma: ['', [Validators.required]]
+      firma: ['']
     })
   }
 
@@ -144,7 +144,7 @@ export class EditEmpleadoComponent implements OnInit {
       firma: this.formEditEmpleado.controls['firma'].value,
       rol: 'empleado',
     }
-    this._es.updateEmpleado(this.id, body).subscribe(res=>{
+    this._es.updateEmpleado(this.id, body).subscribe(res =>{
       Swal.fire(
         'Good!',
         'El empleado fue actualizado!',
