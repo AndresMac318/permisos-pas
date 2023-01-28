@@ -18,8 +18,8 @@ export class AuthService {
   login(body:{email: string, password: string}){
     //console.log(body);
     
-    return this.http.post<any>('http://localhost:3000/auth/login', body)
-    //www return this.http.post<any>('http://3.217.5.10:3000/auth/login', body)
+    //return this.http.post<any>('http://localhost:3000/auth/login', body)
+    return this.http.post<any>('http://3.217.5.10:3000/auth/login', body)
     .pipe(
       tap( res => {
         this.userActive = res.user;
@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   get role(){
-    console.log('uactive',this.userActive.rol);
+    //console.log('uactive',this.userActive.rol);
     return this.userActive.rol;
   }
 
