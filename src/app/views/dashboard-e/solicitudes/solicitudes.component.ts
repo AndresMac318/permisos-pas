@@ -28,7 +28,7 @@ export class SolicitudesComponent implements OnInit {
   }
 
   toNewPermiso(){
-    this.router.navigateByUrl('/dashboard/permisos-new');
+    this.router.navigateByUrl('/dashboard/new-solicitud');
   }
 
   cargarPermisos(id:any){

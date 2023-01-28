@@ -33,6 +33,8 @@ export class NewPermisoComponent implements OnInit {
 
   respuestaHuella!: any;
 
+  bodyCargar!: any;
+
   //idAdmin = new BehaviorSubject<number>(0);
   //idEmpleado = new BehaviorSubject<number>(0);
   idNew:any;
@@ -67,6 +69,12 @@ export class NewPermisoComponent implements OnInit {
       })
     ).subscribe(); */
     
+    this.bodyCargar = {
+      id: sessionStorage.getItem('id'),
+      rol: sessionStorage.getItem('rol')
+    }
+
+
     // Cargar motivos
     this._ms.getMotivos().subscribe(res => {
       this.motivos = res;
@@ -95,19 +103,16 @@ export class NewPermisoComponent implements OnInit {
         //console.log('cedula activo', this.userActive.cedula);
         this.documentsNum.push(this.userActive.cedula);
         
-        //console.log(this.documentsNum);
+        console.log(this.documentsNum);
       })
     ).subscribe();
   }
 
   //carga info del user loggeado "admin"
   cargarUserLog(){
-    let body = {
-      id: sessionStorage.getItem('id'),
-      rol: sessionStorage.getItem('rol')
-    }
+    
     // !retorna datos de la persona
-    this._ps.getSolicitante(body).subscribe(res=>{
+    this._ps.getSolicitante(this.bodyCargar).subscribe(res=>{
       this.userActive = res;
       //console.log('data admin cargada');
       //console.log(this.userActive);

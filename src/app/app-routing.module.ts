@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { AdminGuard } from './guards/admin.guard';
 import { EmpleadosGuard } from './guards/empleados.guard';
 import { GeneralGuard } from './guards/general.guard';
+import { AddSolicitudComponent } from './views/dashboard-e/add-solicitud/add-solicitud.component';
 import { DetalleSolicitudComponent } from './views/dashboard-e/detalle-solicitud/detalle-solicitud.component';
 import { PerfilComponent } from './views/dashboard-e/perfil/perfil.component';
 import { SolicitudesComponent } from './views/dashboard-e/solicitudes/solicitudes.component';
@@ -45,6 +46,7 @@ const routes: Routes = [
       { path:'motivos-edit/:id', component: EditMotivoComponent ,canActivate: [AdminGuard]},
       { path:'perfil', component: PerfilComponent},
       { path:'solicitudes', component: SolicitudesComponent},
+      { path:'new-solicitud', component: AddSolicitudComponent},
       { path:'detalle/:id', component: DetalleSolicitudComponent},
     ],
   },

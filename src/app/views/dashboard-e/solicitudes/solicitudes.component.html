@@ -1,8 +1,8 @@
 <div class="row justify-content-center mt-4">
     <div class="col-8">
-        <h2>Control de solicitudes</h2>
+        <h2>Control de Solicitudes</h2>
         <hr>
-        <!-- <button class="btn btn-success" (click)="toNewPermiso()">Nuevo</button> -->
+        <button class="btn btn-success" (click)="toNewPermiso()">Nueva</button>
         <!-- <a class="btn btn-success" routerLink="/dashboard/empleado-add"><i class="bi bi-person-plus-fill"></i>Agregar</a> -->
         
     </div>
@@ -31,6 +31,8 @@
                   <span 
                     class="badge" 
                     [ngClass]="{'text-bg-danger': permiso.estado === 'no aprobado', 
+                                'text-bg-warning': permiso.estado === 'sin revisar',
+                                'text-white': permiso.estado === 'sin revisar', 
                                 'text-bg-success': permiso.estado === 'aprobado'}"
                   >
                     {{permiso.estado}}

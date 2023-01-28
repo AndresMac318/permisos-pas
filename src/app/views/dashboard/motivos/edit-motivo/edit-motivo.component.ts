@@ -4,6 +4,7 @@ import { Motivo } from 'src/app/models/motivo';
 import { MotivosService } from 'src/app/services/motivos/motivos.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit-motivo',
@@ -16,7 +17,12 @@ export class EditMotivoComponent implements OnInit {
   motivo!: Motivo;
   id!: number;
 
-  constructor(private router: ActivatedRoute, private fb: UntypedFormBuilder, private _ms: MotivosService) {
+  constructor(
+    private router: ActivatedRoute,
+    private location: Location, 
+    private fb: UntypedFormBuilder, 
+    private _ms: MotivosService,
+    ) {
     this.crearFormulario();
     
   }
@@ -65,7 +71,7 @@ export class EditMotivoComponent implements OnInit {
         'El motivo fue actualizado!',
         'success'
       )
-      
+      this.location.back();
     })
   }
 

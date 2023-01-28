@@ -31,9 +31,11 @@
                   <span 
                     class="badge" 
                     [ngClass]="{'text-bg-danger': permiso.estado === 'no aprobado', 
-                                'text-bg-success': permiso.estado === 'aprobado'}"
-                  >
-                    {{permiso.estado}}
+                                'text-bg-warning': permiso.estado === 'sin revisar',
+                                'text-white': permiso.estado === 'sin revisar', 
+                                'text-bg-success': permiso.estado === 'aprobado'
+                              }"
+                  >{{permiso.estado}}
                   </span>
                 </td>
                 <td>{{permiso.fpermiso | date}}</td>

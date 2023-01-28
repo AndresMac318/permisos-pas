@@ -78,6 +78,7 @@ export class AddEmpleadoComponent implements OnInit {
       nombre1: ['', [Validators.required, Validators.minLength(2)]],
       nombre2: [''],
       cedula: ['', [Validators.required, Validators.minLength(6)]],
+      //email: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       telefono: ['', [Validators.required, Validators.minLength(7)]],
       direccion: ['', [Validators.required, Validators.minLength(6)]],

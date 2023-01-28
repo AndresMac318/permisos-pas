@@ -14,6 +14,7 @@ import { SignatureModule } from '@syncfusion/ej2-angular-inputs';
 import { PerfilComponent } from './views/dashboard-e/perfil/perfil.component';
 import { SolicitudesComponent } from './views/dashboard-e/solicitudes/solicitudes.component';
 import { DetalleSolicitudComponent } from './views/dashboard-e/detalle-solicitud/detalle-solicitud.component';
+import { AddSolicitudComponent } from './views/dashboard-e/add-solicitud/add-solicitud.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { DetalleSolicitudComponent } from './views/dashboard-e/detalle-solicitud
     PerfilComponent,
     SolicitudesComponent,
     DetalleSolicitudComponent,
+    AddSolicitudComponent,
   ],
   imports: [
     BrowserModule,

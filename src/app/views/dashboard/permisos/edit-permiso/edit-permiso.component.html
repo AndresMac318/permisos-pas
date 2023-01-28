@@ -12,18 +12,23 @@
                     <input type="number" class="form-control" id="floatingInput" autocomplete="off" formControlName="cedSolicita" >
                     <label for="floatingInput">Cédula del solicitante</label>
                 </div> -->
-                <div class="form-floating">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="codMotivo" >
-                      <option *ngFor="let motivo of motivos" [value]="motivo.codMotivo">{{motivo.detalleMotivo}}</option>
+                <!-- <div class="form-floating">
+                    <select class="form-select" id="floatingSelect" aria-label="Disabled select example" formControlName="codMotivo" disabled >
+                      <option *ngFor="let motivo of motivos" [value]="motivo.codMotivo" >{{ motivo.detalleMotivo }}</option>
                     </select>
                     <label for="floatingSelect">Seleccione el motivo</label>
+                </div> -->
+
+                <div class="form-floating mb-4">
+                    <input type="text" class="form-control" id="floatingInput" autocomplete="off" formControlName="codMotivo" readonly>
+                    <label for="floatingInput">Motivo del permiso</label>
                 </div>
                 <div class="form-floating mb-4">
-                    <input type="datetime-local" class="form-control" id="floatingInput" [min]="fecha" autocomplete="off" formControlName="fsalida" >
+                    <input type="datetime-local" class="form-control" id="floatingInput" [min]="fecha" autocomplete="off" formControlName="fsalida" readonly >
                     <label for="floatingInput">Fecha de salida</label>
                 </div>
                 <div class="form-floating mb-4">
-                    <input type="datetime-local" class="form-control" id="floatingInput" [min]="fecha" autocomplete="off" formControlName="fentrada" >
+                    <input type="datetime-local" class="form-control" id="floatingInput" [min]="fecha" autocomplete="off" formControlName="fentrada" readonly >
                     <label for="floatingInput">Fecha de entrada</label>
                 </div>
                 <div class="form-floating">

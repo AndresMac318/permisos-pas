@@ -1,0 +1,80 @@
+<div class="row justify-content-center">
+    <div class="col-10 mt-4">
+        <h2>Nueva Solicitud</h2>
+        <hr>
+        <form action="" [formGroup]="formNewSolicitud" (ngSubmit)="guardarSolicitud()">
+            <!-- xd -->
+            <!-- <div class="form-floating mb-4">
+                <button type="button" class='btn btn-primary btnCargaId' value="Cargar Datos" (click)="consulta_empleado()">Cargar Por Huella</button>
+            </div>      -->                      
+            <!-- xd -->
+            
+            <div class="row row-cols-2 mt-4">
+                <div class="form-floating mb-4">
+                    <input type="number" class="form-control" id="floatingInput" autocomplete="off" formControlName="cedAutoriza" readonly>
+                    <label for="floatingInput">Cédula del solicitante</label>
+                </div>
+                <div class="form-floating mb-4">
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="idAdministrativo" >
+                        <option *ngFor="let admin of admins" [value]="admin.idAdministrativo">{{ admin?.nombre1+' '+admin?.apellido1 }}</option>
+                      </select>
+                    <label for="floatingSelect">Seleccione el Jefe</label>
+                </div>
+                <div class="form-floating">
+                    
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="codMotivo" >
+                        <option *ngFor="let motivo of motivos" [value]="motivo.codMotivo">{{motivo?.detalleMotivo}}</option>
+                      </select>
+                    <label for="floatingSelect">Seleccione el motivo</label>
+                </div>
+                <div class="form-floating mb-4">
+                    <input type="datetime-local" class="form-control" id="floatingInput" [min]="fecha" autocomplete="off" formControlName="fsalida" >
+                    <label for="floatingInput">Fecha de salida</label>
+                </div>
+                <div class="form-floating mb-4">
+                    <input type="datetime-local" class="form-control" id="floatingInput" [min]="fecha" autocomplete="off" formControlName="fentrada" >
+                    <label for="floatingInput">Fecha de entrada</label>
+                </div>
+                <!-- <div class="form-floating">
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="estado" >
+                      <option value="aprobado">Aprobado</option>
+                      <option value="no aprobado">No aprobado</option>
+                    </select>
+                    <label for="floatingSelect">Estado del permiso</label>
+                </div> -->
+            </div>
+
+            <div class="form-floating mb-4">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" formControlName="observaciones" style="height: 150px"></textarea>
+                <label for="floatingTextarea2">Observaciones</label>
+            </div>
+
+            <div class="row row-cols-12 g-4 justify-content-center mb-4">
+                <div class="col-sm-12 col-lg-6 d-flex justify-content-center">
+                    <div>
+                        <canvas 
+                            class="canvasAdmin"
+                            ejs-signature
+                            #signatureSolicita id="signature" 
+                            [maxStrokeWidth]="1" 
+                            [minStrokeWidth]="0.4" 
+                            [velocity]="0.9"                             
+                            >
+                        </canvas>
+                        <h6 class="">Firma del Empleado</h6>
+                    </div>
+                </div>                                           
+            </div>
+
+            
+
+            <div class="row justify-content-center mb-4">
+                <div class="col-4 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-success">Guardar permiso</button>
+                </div>
+            </div>
+            
+            
+        </form>
+    </div>
+</div>
