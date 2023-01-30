@@ -167,11 +167,6 @@ export class AddAdminComponent implements OnInit {
     console.log(this.respuestaHuella);
     this.formAddAdmin.controls['idHuella'].setValue(this.respuestaHuella[0].id_huella);
     
-    /* this._es.getHuellaData(body).subscribe(res => {
-      console.log(res);
-      respuesta de la data con [{id: ?, id_huella: ?}]
-      //this.formAddAdmin.controls['id_huella'].setValue(res)
-    }) */
   }
 
 }

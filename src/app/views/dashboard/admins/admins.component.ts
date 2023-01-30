@@ -46,8 +46,7 @@ export class AdminsComponent implements OnInit {
     })
     .then((result) => {
       if (result.isConfirmed) {
-        this._es.deleteAdmin(id).subscribe(res=>{/* ***** */
-          console.log(res);
+        this._es.deleteAdmin(id).subscribe(res=>{
           Swal.fire(
             'Admin eliminado',
             'Haz eliminado un admin.',

@@ -49,7 +49,6 @@ export class AddMotivoComponent implements OnInit {
         }
       });
     }
-    //console.log(this.formAddEmpleado.value);
     const body : Motivo = {
       codMotivo: this.formAddMotivo.controls['codMotivo'].value,
       detalleMotivo: this.formAddMotivo.controls['detalle'].value,
@@ -62,9 +61,7 @@ export class AddMotivoComponent implements OnInit {
         'success'
       );
       this.location.back();
-    })
-    //console.log(body);
-    
+    })    
   }
 
 }

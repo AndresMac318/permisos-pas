@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, UntypedFormGroup, Validators } from '@angular/forms';
 import { Motivo } from 'src/app/models/motivo';
-
 import * as moment from 'moment';
 import { PermisosService } from 'src/app/services/permisos/permisos.service';
 import { MotivosService } from 'src/app/services/motivos/motivos.service';
@@ -31,22 +30,16 @@ export class EditPermisoComponent implements OnInit {
     private _motivoS: MotivosService,
     private fb: FormBuilder,
   ) {
-    //Obtiene id del permiso
     this.actRouter.params.subscribe(params=>{
       this.idPermiso = params['id'];
-      //console.log(this.idPermiso);
     });
-    //Obtienen los motivos
     this._motivoS.getMotivos().subscribe(res => {
       this.motivos = res;
     });
     this.crearFormulario();
-    //this.obtenerPermiso();
   }
   
   ngOnInit(): void {
-    
-    //this.obtenerPermiso();
     this.cargarFormulario();
   }
 
@@ -58,7 +51,6 @@ export class EditPermisoComponent implements OnInit {
   }
 
   crearFormulario(){
-    //console.log('crear form');
     this.formEditPermiso = this.fb.group({
       cedAutoriza: ['', [Validators.required, Validators.minLength(7)]],
       cedSolicita: ['', [Validators.required, Validators.minLength(7)]],
@@ -72,27 +64,15 @@ export class EditPermisoComponent implements OnInit {
 
   async cargarFormulario(){
     this.permiso = await this._permisoS.getPermiso(this.idPermiso)
-    //console.log(this.permiso.solicitudE.fsalida);
-    //console.log(this.permiso.solicitudE.fentrada);
-    //console.log(this.permiso);
-    // ahorro let salida = this.permiso.solicitudE.fsalida
-    //console.log(typeof(this.permiso.solicitudE.fsalida));
     let newFecha1 = Date.parse(this.permiso.solicitudE.fsalida);
     let newFecha2 = Date.parse(this.permiso.solicitudE.fentrada);
-    //let newSalida =  moment.utc(newFecha).format('DD/MM/YYYY h:mm:ss a');
     let newSalida =  moment.utc(newFecha1).format('YYYY-MM-DD HH:MM:SS');
     let newEntrada =  moment.utc(newFecha2).format('YYYY-MM-DD HH:MM:SS');
-    
-    //console.log(newSalida);
-    
-     
-
     
     this.formEditPermiso.controls['cedAutoriza'].setValue(this.permiso.solicitudE.idAdministrativo);
     this.formEditPermiso.controls['cedSolicita'].setValue(this.permiso.solicitudE.idEmpleado);
     this.formEditPermiso.controls['codMotivo'].setValue(this.permiso.solicitudE.codMotivo);
     this.formEditPermiso.controls['fsalida'].setValue(newSalida);
-    //this.formEditPermiso.controls['fsalida'].setValue(this.permiso.solicitudE.fsalida);
     this.formEditPermiso.controls['fentrada'].setValue(newEntrada);
     this.formEditPermiso.controls['estado'].setValue(this.permiso.solicitudE.estado);
     this.formEditPermiso.controls['observaciones'].setValue(this.permiso.solicitudE.observaciones);
@@ -143,7 +123,6 @@ export class EditPermisoComponent implements OnInit {
       });
     })
     this.location.back();
-    //console.log(body);
   }
 
   

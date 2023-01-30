@@ -18,9 +18,7 @@ export class EmpleadosComponent implements OnInit {
     autoHide: false, scrollbarMinSize: 100
   }
 
-  constructor(private router: Router, private _es: EmpleadoService) {
-    
-  }
+  constructor(private router: Router, private _es: EmpleadoService) { }
 
   ngOnInit(): void {
     this.cargarEmpleados();
@@ -29,7 +27,6 @@ export class EmpleadosComponent implements OnInit {
   cargarEmpleados(){
     this._es.getEmpleados().subscribe(res => {
       this.empleados = res;
-      //console.log(this.empleados[0]);
     })
   }
 
@@ -53,7 +50,6 @@ export class EmpleadosComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this._es.deleteEmpleado(id).subscribe(res=>{
-          //?console.log(res);
           Swal.fire(
             'Empleado eliminado',
             'Haz eliminado un empleado.',
@@ -65,7 +61,6 @@ export class EmpleadosComponent implements OnInit {
       }
     })
     
-    //this.router.navigateByUrl('dashboard/motivos')
   }
 
 }

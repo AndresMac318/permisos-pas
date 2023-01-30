@@ -4,21 +4,6 @@
         <hr>
         <form action="" [formGroup]="formEditPermiso" (ngSubmit)="guardarPermiso()" >
             <div class="row row-cols-2">
-                <!-- <div class="form-floating mb-4">
-                    <input type="number" class="form-control" id="floatingInput" autocomplete="off" formControlName="cedAutoriza" >
-                    <label for="floatingInput">Cédula autoriza</label>
-                </div>
-                <div class="form-floating mb-4">
-                    <input type="number" class="form-control" id="floatingInput" autocomplete="off" formControlName="cedSolicita" >
-                    <label for="floatingInput">Cédula del solicitante</label>
-                </div> -->
-                <!-- <div class="form-floating">
-                    <select class="form-select" id="floatingSelect" aria-label="Disabled select example" formControlName="codMotivo" disabled >
-                      <option *ngFor="let motivo of motivos" [value]="motivo.codMotivo" >{{ motivo.detalleMotivo }}</option>
-                    </select>
-                    <label for="floatingSelect">Seleccione el motivo</label>
-                </div> -->
-
                 <div class="form-floating mb-4">
                     <input type="text" class="form-control" id="floatingInput" autocomplete="off" formControlName="codMotivo" readonly>
                     <label for="floatingInput">Motivo del permiso</label>
@@ -43,47 +28,12 @@
                     <label for="floatingTextarea2">Observaciones</label>
                 </div>
 
-            </div>
-
-            <!-- <div class="row row-cols-5 justify-content-center mb-4" >
-                <button type="button" class="btn btn-primary" (click)="open()" >Firmar</button>
-            </div>
-
-            <div class="row justify-content-center mb-4">
-                <div class="col col-8">
-                    <h6 class="text-center">Firma autoriza</h6>
-                    <canvas 
-                        class="canvasAdmin"
-                        ejs-signature 
-                        #signatureAutoriza id="signature" 
-                        [maxStrokeWidth]="1" 
-                        [minStrokeWidth]="0.4" 
-                        [velocity]="0.9"                             
-                    >
-                    </canvas>
-                </div>
-            </div> -->
-            
-            <!-- <div class="row justify-content-start mb-4">
-                <div class="col col-8">
-                    <h6 class="text-center">Firma solicita</h6>
-                    <canvas 
-                        class="canvasAdmin"
-                        ejs-signature 
-                        #signatureSolicita id="signature" 
-                        [maxStrokeWidth]="1" 
-                        [minStrokeWidth]="0.4" 
-                        [velocity]="0.9"                             
-                    >
-                    </canvas>
-                </div>                
-            </div> -->
+            </div>          
 
             <div class="row justify-content-center mb-4">
                 <div class="col-4">
                     <button type="submit" class="btn btn-success">Actualizar Permiso</button>
                 </div>
-                
             </div>
             
             

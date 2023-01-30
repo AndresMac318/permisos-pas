@@ -21,7 +21,6 @@ export class EditAdminComponent implements OnInit {
   id!:number;
   generos: string[] = ['masculino', 'femenino', 'otro'];
 
-  //ref a canvas firma admin
   @ViewChild('signatureAdmin')
   public signatureObject!: SignatureComponent; 
 
@@ -42,20 +41,16 @@ export class EditAdminComponent implements OnInit {
   ngOnInit(): void {
     this.router.params.subscribe(params => {
       this.id = params['id'];
-      //console.log(this.id);
       
     });
 
     this._es.getAdmin(this.id).subscribe(res => {
       
       let {fnacimiento} = res;
-      //console.log('server', fnacimiento);
       var mifecha = moment.utc(fnacimiento).format('YYYY-MM-DD');
-      //console.log('mia',mifecha);
       this.admin = res;
       this.admin.fnacimiento = mifecha; 
       this.cargarFormulario();
-      //console.log(this.admin);
       
     })
   }
@@ -76,7 +71,6 @@ export class EditAdminComponent implements OnInit {
   }
 
   crearFormulario(){
-    //console.log('crear form');
     this.formEditAdmin = this.fb.group({
       apellido1: ['', [Validators.required]],
       apellido2: ['', [Validators.required]],
@@ -93,7 +87,6 @@ export class EditAdminComponent implements OnInit {
   }
 
   cargarFormulario(){
-    //console.log('cargar form');   
     this.formEditAdmin.controls['apellido1'].setValue(this.admin.apellido1);
     this.formEditAdmin.controls['apellido2'].setValue(this.admin.apellido2);
     this.formEditAdmin.controls['nombre1'].setValue(this.admin.nombre1);
@@ -115,7 +108,6 @@ export class EditAdminComponent implements OnInit {
       alert('Ingrese su firma');
     }
     this.formEditAdmin.get('firma')?.setValue(base64);
-    /* console.log(base64); */
   }
 
   guardarAdmin(){
@@ -137,7 +129,6 @@ export class EditAdminComponent implements OnInit {
       firma: this.formEditAdmin.controls['firma'].value,
       rol: 'admin',
     }
-    //console.log(this.id, body);
     
     this._es.updateAdmin(this.id, body).subscribe((res: any) => {
       if (res.status === 'OK: Usuario actualizado') {
@@ -153,11 +144,9 @@ export class EditAdminComponent implements OnInit {
           text: 'Ocurrio un error consulte con el administrador, code: 000xcemp!',
         });
       }
-      //console.log(res);
       this.location.back();
 
     })
-    //console.log(body);
     
   }
 

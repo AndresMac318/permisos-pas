@@ -61,8 +61,7 @@ export class AddSolicitudComponent implements OnInit {
 
   getDataServices(){
     this._ms.getMotivos().subscribe( res => this.motivos = res );
-    this._es.getEmpleado(this.cedulaEmp).subscribe( res => {this.userActivo = res; console.log(this.userActivo);
-    } );
+    this._es.getEmpleado(this.cedulaEmp).subscribe( res => {this.userActivo = res;});
     this._es.getAdmins().subscribe(res=>{
       this.admins = res;     
     });
@@ -90,8 +89,6 @@ export class AddSolicitudComponent implements OnInit {
         }
       });
     }
-
-    //console.log(this.formNewSolicitud.value);
     
     let body = {
       idAdministrativo: this.formNewSolicitud.controls['idAdministrativo'].value,
@@ -102,13 +99,6 @@ export class AddSolicitudComponent implements OnInit {
       observaciones: this.formNewSolicitud.controls['observaciones'].value,
       codMotivo: this.formNewSolicitud.controls['codMotivo'].value,
       estado: 'sin revisar',
-      /* idEmpleado: this.userActivo.idAdministrativo,
-      fpermiso: moment.utc(this.fechaNow.setMinutes(this.fechaNow.getMinutes() + this.fechaNow.getTimezoneOffset())).format('YYYY-MM-DD'),
-      fsalida: this.formNewPermiso.controls['fsalida'].value,
-      fentrada: this.formNewPermiso.controls['fentrada'].value,
-      observaciones: this.formNewPermiso.controls['observaciones'].value,
-      codMotivo: this.formNewPermiso.controls['codMotivo'].value,
-      estado: this.formNewPermiso.controls['estado'].value, */
     }
     
     this._ps.createPermiso(body).subscribe(res => {

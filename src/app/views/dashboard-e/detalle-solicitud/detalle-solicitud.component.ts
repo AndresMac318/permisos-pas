@@ -48,16 +48,11 @@ export class DetalleSolicitudComponent implements OnInit {
       this.idSolicitud = params['id'];
       this.getSolicitud();
     });
-    // realizar loaders mientras se carga la info de la data
   }
 
   async getSolicitud(){
     this.solicitud = await this._permisoS.getPermisoE(this.idSolicitud);
     this.infoAdmin = await this._empleadosS.getAdminID(this.solicitud.permiso.idAdministrativo);
-
-    console.log(this.solicitud);
-    console.log(this.infoAdmin);
-
 
     if (this.solicitud.permiso.estado === 'no aprobado') {
       this.nonAutorized = false;
@@ -77,20 +72,10 @@ export class DetalleSolicitudComponent implements OnInit {
     this.firmaSolicita = this.solicitud.permiso.firma;   
     this.signatureObject.load(this.infoAdmin.admin.firma);
     this.signatureObject2.load(this.firmaSolicita);
-    /* this.signatureObject.load(this.firmaAutoriza);
-    this.signatureObject2.load(this.firmaSolicita); */
   }
 
   printer() {
     window.print();
-    /* const printContent = document.getElementById("print");
-    const WindowPrt = window.open('', '', 'left=0,top=50,width=900,height=900,toolbar=0,scrollbars=0,status=0');
-    WindowPrt?.document.write(printContent!.innerHTML);
-    WindowPrt?.document.close();
-    WindowPrt?.focus();
-    WindowPrt?.print();
-    //WindowPrt?.close();
-    this.fly=true; */
   }
 
 }

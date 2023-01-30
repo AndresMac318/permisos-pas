@@ -20,7 +20,6 @@ export class SolicitudesComponent implements OnInit {
     private http: HttpClient
   ) {
     this.id = sessionStorage.getItem('id');  
-    console.log(this.id);
   }
 
   ngOnInit(): void {
@@ -32,16 +31,13 @@ export class SolicitudesComponent implements OnInit {
   }
 
   cargarPermisos(id:any){
-    console.log('entro');
     const body = {id: this.id}
     this._ps.getSolicitudes(body).subscribe(res=>{
       this.permisos=res;
-      console.log(this.permisos);
     })
   }
 
   toEdit(id:any){
-    console.log('hi', id);
     this.router.navigateByUrl(`/dashboard/detalle/${id}`);
   }
 

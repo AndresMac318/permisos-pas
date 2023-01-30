@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ResLogin } from 'src/app/models/ResLogin';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import Swal from 'sweetalert2';
 
@@ -41,7 +40,6 @@ export class LoginComponent implements OnInit {
         icon: 'error',
         title: 'Oops...',
         text: 'Todos los campos son requerdidos, ingrese nuevamente!',
-        /* footer: '<a href="">Why do I have this issue?</a>' */
       });
       
       return Object.values(this.formLogin.controls).forEach(control => {
@@ -60,7 +58,6 @@ export class LoginComponent implements OnInit {
 
     this._auths.login(body).subscribe(res => {
       
-      console.log(res);
       if(res.ok === false){
         Swal.fire({
           icon: 'error',
@@ -71,7 +68,6 @@ export class LoginComponent implements OnInit {
       }
 
       if (res.user.rol === 'empleado') {
-        console.log('es empleado');
         sessionStorage.setItem('session_token', 'dCsd%Rg*f2?03DeE');
         sessionStorage.setItem('id', res.user.idEmpleado+'');
         sessionStorage.setItem('rol', res.user.rol);
@@ -80,9 +76,7 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('dashboard/solicitudes');
       }
 
-      if (res.user.idAdministrativo) {
-        console.log('es admin');
-        
+      if (res.user.idAdministrativo) {        
         sessionStorage.setItem('session_token', 'dCsd%Rg*f2?03DeE');
         sessionStorage.setItem('id', res.user.idAdministrativo+'');
         sessionStorage.setItem('rol',res.user.rol);

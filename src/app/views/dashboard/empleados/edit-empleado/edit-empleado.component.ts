@@ -23,7 +23,6 @@ export class EditEmpleadoComponent implements OnInit {
     'masculino', 'femenino', 'prefiero no decir'
   ];
 
-  //ref a canvas firma empleado
   @ViewChild('signatureEmpleado')
   public signatureObject!: SignatureComponent; 
 
@@ -45,17 +44,13 @@ export class EditEmpleadoComponent implements OnInit {
   ngOnInit(): void {
     this.router.params.subscribe(params => {
       this.id = params['id'];
-      //console.log(this.id);
     });
 
     this._es.getEmpleado(this.id).subscribe(res=>{
       
       let {fnacimiento} = res.empleado;
-      //?console.log('server', fnacimiento);
       var mifecha = moment.utc(fnacimiento).format('YYYY-MM-DD');
-      //console.log('mia',mifecha);
       this.empleado = res.empleado;
-      //console.log(this.empleado);
       
       this.empleado.fnacimiento = mifecha; 
       this.cargarFormulario();
@@ -78,7 +73,6 @@ export class EditEmpleadoComponent implements OnInit {
   }
 
   crearFormulario(){
-    //console.log('crear form');
     this.formEditEmpleado = this.fb.group({
       apellido1: ['', [Validators.required]],
       apellido2: [''],
@@ -95,7 +89,6 @@ export class EditEmpleadoComponent implements OnInit {
   }
 
   cargarFormulario(){
-    //console.log('cargar form');   
     this.formEditEmpleado.controls['apellido1'].setValue(this.empleado.apellido1);
     this.formEditEmpleado.controls['apellido2'].setValue(this.empleado.apellido2);
     this.formEditEmpleado.controls['nombre1'].setValue(this.empleado.nombre1);
@@ -111,13 +104,11 @@ export class EditEmpleadoComponent implements OnInit {
   }
 
   public saveSignature(){
-    /* this.signatureObject.save(); */
     let base64: string = this.signatureObject.getSignature();
     if (base64 == null || base64==="") {
       alert('Ingrese su firma');
     }
     this.formEditEmpleado.get('firma')?.setValue(base64);
-    /* console.log(base64); */
   }
 
   guardarEmpleado(){
@@ -151,9 +142,7 @@ export class EditEmpleadoComponent implements OnInit {
         'success'
       );
         this.location.back();
-    })
-    //console.log(body);
-    
+    })    
   }
 
 }

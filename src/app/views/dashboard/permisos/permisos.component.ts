@@ -18,8 +18,6 @@ export class PermisosComponent implements OnInit {
 
   constructor(private router: Router, private _ps: PermisosService, private http: HttpClient) {
     this.id=sessionStorage.getItem('id');
-    /* console.log(this.id); */
-    
   }
 
   ngOnInit(): void {
@@ -33,7 +31,6 @@ export class PermisosComponent implements OnInit {
   cargarPermisos(id:any){
     this._ps.getPermisosAdmin(id).subscribe(res=>{
       this.permisos=res;
-      //console.log(this.permisos);
     })
   }
 
@@ -41,10 +38,7 @@ export class PermisosComponent implements OnInit {
     this.router.navigateByUrl(`/dashboard/permisos-edit/${id}`);
   }
 
-  deletePermiso(id:any){
-    
-    //console.log(id);
-    
+  deletePermiso(id:any){    
     Swal.fire({
       title: '¿Estas seguro de realizar esta acción?',
       text: "Estas a punto de eliminar un permiso.",

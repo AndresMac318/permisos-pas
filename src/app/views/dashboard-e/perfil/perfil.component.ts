@@ -26,12 +26,9 @@ export class PerfilComponent implements OnInit {
 
   ngOnInit(): void {
     this._es.getEmpleado(this.id).subscribe(res => {
-      console.log(res);
       
       let {fnacimiento} = res.empleado;
-      //?console.log('server', fnacimiento);
       var mifecha = moment.utc(fnacimiento).format('YYYY-MM-DD');
-      //console.log('mia',mifecha);
       this.empleado = res.empleado;      
       this.empleado.fnacimiento = mifecha; 
       this.cargarFormulario();
@@ -39,7 +36,6 @@ export class PerfilComponent implements OnInit {
   }
 
   crearFormulario(){
-    //console.log('crear form');
     this.formEmpleado = this.fb.group({
       nombre: ['', [Validators.required]],
       cedula: ['', [Validators.required]],
@@ -53,7 +49,6 @@ export class PerfilComponent implements OnInit {
   }
 
   cargarFormulario(){
-    //console.log('cargar form');   
     this.formEmpleado.controls['nombre'].setValue(`${this.empleado.nombre1+' '+this.empleado.nombre2+' '+this.empleado.apellido1+' '+this.empleado.apellido2}`);
     this.formEmpleado.controls['cedula'].setValue(this.empleado.cedula);
     this.formEmpleado.controls['email'].setValue(this.empleado.email);
@@ -61,7 +56,6 @@ export class PerfilComponent implements OnInit {
     this.formEmpleado.controls['direccion'].setValue(this.empleado.direccion);
     this.formEmpleado.controls['sexo'].setValue(this.empleado.sexo);
     this.formEmpleado.controls['fnacimiento'].setValue(this.empleado.fnacimiento);
-    //this.formEditEmpleado.controls['firma'].setValue(this.empleado.firma);
   }
 
   guardarEmpleado(){

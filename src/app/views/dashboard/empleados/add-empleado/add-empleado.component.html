@@ -4,9 +4,7 @@
         <hr>
 
         <form action="" [formGroup]="formAddEmpleado" (ngSubmit)="guardarEmpleado()" >
-            
-            <!-- xd -->
-            
+                        
             <div class="row row-cols-4 mb-3">
             
                 <div class="col form-floating">
@@ -18,9 +16,7 @@
                 </div>                           
                 
             </div>
-        
-            <!-- xd -->
-            
+                    
             <div class="row row-cols-2">
                 <div class="form-floating mb-4">
                     <input type="text" class="form-control" id="floatingInput" autocomplete="off" formControlName="apellido1" >
@@ -64,13 +60,6 @@
                     <input type="date" class="form-control" id="floatingInput" autocomplete="off" formControlName="fnacimiento" >
                     <label for="floatingInput">Fecha de nacimiento:</label>
                 </div>
-                
-                <!-- <div class="form-floating mb-4">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-                    <label for="floatingTextarea2">Ingrese su huella</label>
-                </div> -->
-                
-
             </div>
 
             <div class="row justify-content-center mb-4">
@@ -119,9 +108,6 @@
     $(document).on("click", ".btnCargaId", function () {
         var opcion = 2;
         $.ajax({
-            //url: "http://localhost/html/php/queryRead.php",
-            //url: "http://44.200.248.203/php/php/queryRead.php",
-            //url: "http://54.152.89.67/php/php/queryRead.php",
             url: "https://passphp.herokuapp.com/php/queryRead.php",
             type: "POST",
             dataType: "json",

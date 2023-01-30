@@ -78,7 +78,6 @@ export class AddEmpleadoComponent implements OnInit {
       nombre1: ['', [Validators.required, Validators.minLength(2)]],
       nombre2: [''],
       cedula: ['', [Validators.required, Validators.minLength(6)]],
-      //email: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       telefono: ['', [Validators.required, Validators.minLength(7)]],
       direccion: ['', [Validators.required, Validators.minLength(6)]],
@@ -137,10 +136,7 @@ export class AddEmpleadoComponent implements OnInit {
       fnacimiento: this.formAddEmpleado.controls['fnacimiento'].value,
       firma: this.formAddEmpleado.controls['firma'].value,
       rol: 'empleado',
-    };  
-
-    console.log(body);
-    
+    };      
 
     this._es.createEmpleado(body).subscribe(res => {
 
@@ -175,49 +171,7 @@ export class AddEmpleadoComponent implements OnInit {
     this.respuestaHuella = await this._es.getHuellaData(body);
     
     this.formAddEmpleado.controls['idHuella'].setValue(this.respuestaHuella[0].id_huella);
-    console.log(this.respuestaHuella);
 
-    /* var opcion = 2;
-    var xhttp = new XMLHttpRequest();
-
-    xhttp.open("POST", "http://localhost/html/php/queryRead.php", true); 
-    xhttp.setRequestHeader("Content-Type", "application/json");
-
-    
-
-    xhttp.onreadystatechange = function() {
-      let id_;
-      if (this.readyState == 4 && this.status == 200) {
-        // Response
-        let data = this.responseText;
-        let lol = JSON.parse(data);
-        id_ = lol[0].id_huella;
-        alert(id_)
-      }
-      return id_;
-      
-    };
-
-    console.log(this.dataHuella);
-    
-
-    var data =  { opcion: opcion, nombre:'', id_huella:'' };
-    xhttp.send(JSON.stringify(data)); */
-    //console.log(this.formAddEmpleado.controls['idHuella'].value);
-    
-
-    /* if(this.formAddEmpleado.controls['idHuella'].value === '' || this.formAddEmpleado.controls['idHuella'].value === null){
-      console.log('ingrese una huella')
-      return;
-    } */
-
-    //const idHuella = await this._es.getHuellaData(body) 
-    
-    
-    /* console.log(res[0].id_huella);
-      this.inputElement.nativeElement = res[0].id_huella; */
-      //this.formAddEmpleado.controls['id_huella'].setValue(res)
-      //console.log(res);
   }
 
 }

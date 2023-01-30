@@ -3,11 +3,9 @@
         <h2>Nuevo permiso</h2>
         <hr>
         <form action="" [formGroup]="formNewPermiso" (ngSubmit)="guardarPermiso()">
-            <!-- xd -->
             <div class="form-floating mb-4">
                 <button type="button" class='btn btn-primary btnCargaId' value="Cargar Datos" (click)="consulta_empleado()">Cargar Por Huella</button>
             </div>                           
-            <!-- xd -->
             
             <div class="row row-cols-2">
                 
@@ -81,49 +79,11 @@
                 </div>                              
             </div>
 
-            <!-- * sin firma 
-            <div class="row row-cols-5 justify-content-center mb-4" >
-                <button type="button" class="btn btn-primary" (click)="open()" >Firmar</button>
-            </div>
-
-            <div class="row justify-content-center mb-4">
-                <div class="col col-8">
-                    <h6 class="text-center">Firma autoriza</h6>
-                    <canvas 
-                        class="canvasAdmin"
-                        ejs-signature 
-                        #signatureAutoriza id="signature" 
-                        [maxStrokeWidth]="1" 
-                        [minStrokeWidth]="0.4" 
-                        [velocity]="0.9"                             
-                    >
-                    </canvas>
-                </div>
-            </div> 
-            -->
-            
-            <!-- <div class="row justify-content-start mb-4">
-                <div class="col col-8">
-                    <h6 class="text-center">Firma solicita</h6>
-                    <canvas 
-                        class="canvasAdmin"
-                        ejs-signature 
-                        #signatureSolicita id="signature" 
-                        [maxStrokeWidth]="1" 
-                        [minStrokeWidth]="0.4" 
-                        [velocity]="0.9"                             
-                    >
-                    </canvas>
-                </div>                
-            </div> -->
-
             <div class="row justify-content-center mb-4">
                 <div class="col-4 d-flex justify-content-center">
                     <button type="submit" class="btn btn-success">Guardar permiso</button>
                 </div>
-                
-            </div>
-            
+            </div>     
             
         </form>
     </div>
