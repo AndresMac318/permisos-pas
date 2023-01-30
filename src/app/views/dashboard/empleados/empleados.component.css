@@ -1,4 +1,4 @@
-#container-table {
+/* #container-table {
     overflow: scroll;
     height: 100px;
     width: 100%;
@@ -10,6 +10,16 @@
 
 .custom-scroll {
     height: 80%;
+    overflow: auto;
+} */
+
+.container-table {
+    display: block;
+    /* height: auto; */
+}
+
+.custom-scroll {
+    height: 78%;
     overflow: auto;
 }
 /* 

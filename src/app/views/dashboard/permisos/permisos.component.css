@@ -1,0 +1,9 @@
+.container-table {
+    display: block;
+    /* height: auto; */
+}
+
+.custom-scroll {
+    height: 78%;
+    overflow: auto;
+}

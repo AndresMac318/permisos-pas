@@ -19,38 +19,45 @@ export class EmpleadoService {
 
   getEmpleados(){
     //return this.http.get<Empleado[]>(`http://localhost:3000/empleados`);
-    return this.http.get<Empleado[]>(`http://3.217.5.10:3000/empleados`);
+    // return this.http.get<Empleado[]>(`http://3.217.5.10:3000/empleados`);
+    return this.http.get<Empleado[]>(`https://passapi.herokuapp.com/empleados`);
   }
 
   getCedulas(){
     //return this.http.get<Empleado[]>(`http://localhost:3000/empleados`);    
-    return this.http.get<Empleado[]>(`http://3.217.5.10:3000/empleados`);    
+    // return this.http.get<Empleado[]>(`http://3.217.5.10:3000/empleados`);    
+    return this.http.get<Empleado[]>(`https://passapi.herokuapp.com/empleados`);    
   } 
 
   createEmpleado(body: Empleado){
     //return this.http.post<any>(`http://localhost:3000/empleados`, body);
-    return this.http.post<any>(`http://3.217.5.10:3000/empleados`, body);
+    // return this.http.post<any>(`http://3.217.5.10:3000/empleados`, body);
+    return this.http.post<any>(`https://passapi.herokuapp.com/empleados`, body);
   }
 
   updateEmpleado(id: any, body:Empleado){
     //console.log(body);
     //return this.http.put(`http://localhost:3000/empleados/${id}`, body);
-    return this.http.put(`http://3.217.5.10:3000/empleados/${id}`, body);
+    // return this.http.put(`http://3.217.5.10:3000/empleados/${id}`, body);
+    return this.http.put(`https://passapi.herokuapp.com/empleados/${id}`, body);
   }
 
   getEmpleado(id:any){
     //return this.http.get<any>(`http://localhost:3000/empleados/${id}`);
-    return this.http.get<any>(`http://3.217.5.10:3000/empleados/${id}`);
+    // return this.http.get<any>(`http://3.217.5.10:3000/empleados/${id}`);
+    return this.http.get<any>(`https://passapi.herokuapp.com/empleados/${id}`);
   }
   
   getEmpleadoAsync(id:any){
     //return this.http.get<any>(`http://localhost:3000/empleados/${id}`).toPromise();
-    return this.http.get<any>(`http://3.217.5.10:3000/empleados/${id}`).toPromise();
+    // return this.http.get<any>(`http://3.217.5.10:3000/empleados/${id}`).toPromise();
+    return this.http.get<any>(`https://passapi.herokuapp.com/empleados/${id}`).toPromise();
   }
 
   deleteEmpleado(id: any){
     //return this.http.delete(`http://localhost:3000/empleados/${id}`);
-    return this.http.delete(`http://3.217.5.10:3000/empleados/${id}`);
+    // return this.http.delete(`http://3.217.5.10:3000/empleados/${id}`);
+    return this.http.delete(`https://passapi.herokuapp.com/empleados/${id}`);
   }
 
 
@@ -58,7 +65,9 @@ export class EmpleadoService {
 
   getHuellaData(body: any){
     //return this.http.post('http://localhost/html/php/queryRead.php', body).toPromise();
-    return this.http.post('http://44.200.248.203/php/php/queryRead.php', body).toPromise();
+    //return this.http.post('http://44.200.248.203/php/php/queryRead.php', body).toPromise();
+    //return this.http.post('http://54.152.89.67/php/php/queryRead.php', body).toPromise();
+    return this.http.post('https://passphp.herokuapp.com/php/queryRead.php', body).toPromise();
   }
 
   /* FIN Consultar huella */
@@ -67,32 +76,32 @@ export class EmpleadoService {
   
   createAdmin(body: Empleado){
     //return this.http.post<any>(`http://localhost:3000/admins`, body);
-    return this.http.post<any>(`http://3.217.5.10:3000/admins`, body);
+    return this.http.post<any>(`https://passapi.herokuapp.com/admins`, body);
   }
 
   getAdmins(){
     //return this.http.get<Empleado[]>(`http://localhost:3000/admins`);
-    return this.http.get<Empleado[]>(`http://3.217.5.10:3000/admins`);
+    return this.http.get<Empleado[]>(`https://passapi.herokuapp.com/admins`);
   }
 
   getAdmin(id:any){
     //return this.http.get<any>(`http://localhost:3000/admins/${id}`);
-    return this.http.get<any>(`http://3.217.5.10:3000/admins/${id}`);
+    return this.http.get<any>(`https://passapi.herokuapp.com/admins/${id}`);
   }
   
   getAdminID(id:any){
     //return this.http.get(`http://localhost:3000/admins/by/${id}`).toPromise();
-    return this.http.get(`http://3.217.5.10:3000/admins/by/${id}`).toPromise();
+    return this.http.get(`https://passapi.herokuapp.com/admins/by/${id}`).toPromise();
   }
 
   updateAdmin(id: any, body:Empleado){
     //return this.http.put(`http://localhost:3000/admins/${id}`, body);
-    return this.http.put(`http://3.217.5.10:3000/admins/${id}`, body);
+    return this.http.put(`https://passapi.herokuapp.com/admins/${id}`, body);
   }
 
   deleteAdmin(id: any){
     //return this.http.delete(`http://localhost:3000/admins/${id}`);
-    return this.http.delete(`http://3.217.5.10:3000/admins/${id}`);
+    return this.http.delete(`https://passapi.herokuapp.com/admins/${id}`);
   }
 
 }
